@@ -1,17 +1,15 @@
 assemble:
-    - from: build
-      into: static
-name: NOBI Form
-type: customElement
-urls:
+  - from: build
+    into: static
+
+nobi-form:
+  name: NOBI Form
+  type: customElement
+  urls:
     - nobi-form.js
-cssURLs:
+  cssURLs:
     - nobi-form.css
-htmlElementName: nobi-form
-instanceable: false
-portletCategoryName: category.client-extensions
-properties:
-    com.liferay.portlet.display-category=category.client-extensions
-    com.liferay.portlet.header-portlet-css=/css/main.css
-    com.liferay.portlet.instanceable=false
-useESM: true
+  htmlElementName: nobi-form
+  instanceable: false
+  portletCategoryName: category.client-extensions
+  useESM: true
