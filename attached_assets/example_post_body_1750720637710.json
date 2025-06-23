@@ -1,0 +1,35 @@
+{
+  "externalReferenceCode": "string",
+  "keywords": [
+    "string"
+  ],
+  "taxonomyCategoryIds": [
+    0
+  ],
+  "company": {
+    "key": "string",
+    "name": "string"
+  },
+  "companyNumber": "string",
+  "contactNumber": "string",
+  "costCentre": "string",
+  "currency": "string",
+  "date": "2025-06-23",
+  "generalLedgerToBeCharged": "string",
+  "invoiceNetAmount": 0,
+  "invoiceVatAmount": 0,
+  "lineManagerFullname": "string",
+  "multipleBankAccountNumberToBeUsed": "string",
+  "nOBICategory": {
+    "key": "string",
+    "name": "string"
+  },
+  "requestingDepartmentStore": "string",
+  "requestorFirstName": "string",
+  "requestorSurname": "string",
+  "sAPVendorName": "string",
+  "sAPVendorNumber": "string",
+  "totalPrice": 0,
+  "vendorAddressDetails": "string",
+  "vendorName": "string"
+}

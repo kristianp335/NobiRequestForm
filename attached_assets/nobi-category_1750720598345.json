@@ -1,0 +1,221 @@
+{
+  "actions": {
+    "permissions": {
+      "method": "PATCH",
+      "href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/334543"
+    },
+    "get": {
+      "method": "GET",
+      "href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/334543"
+    },
+    "update": {
+      "method": "PUT",
+      "href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/334543"
+    }
+  },
+  "dateCreated": "2025-06-23T19:41:23Z",
+  "dateModified": "2025-06-23T19:41:23Z",
+  "externalReferenceCode": "76c3c0a3-38b3-3c0a-7088-6d06dca97124",
+  "id": 334543,
+  "listTypeEntries": [
+    {
+      "dateCreated": "2025-06-23T19:41:56Z",
+      "dateModified": "2025-06-23T19:41:56Z",
+      "externalReferenceCode": "e31bea66-1f94-64ac-9c50-86c2e6e31672",
+      "id": 334544,
+      "key": "charitableDonation",
+      "name": "Charitable donation",
+      "name_i18n": {
+        "en-GB": "Charitable donation"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:42:31Z",
+      "dateModified": "2025-06-23T19:42:31Z",
+      "externalReferenceCode": "15ac1a40-fd01-464f-e84a-481627f591ba",
+      "id": 334545,
+      "key": "customerComplaints",
+      "name": "Customer complaints",
+      "name_i18n": {
+        "en-GB": "Customer complaints"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:43:04Z",
+      "dateModified": "2025-06-23T19:43:04Z",
+      "externalReferenceCode": "5a2831ac-11d6-1b17-a549-90a44b187661",
+      "id": 334546,
+      "key": "commencementAndSettlementOfLegalProceedings",
+      "name": "Commencement and settlement of legal proceedings",
+      "name_i18n": {
+        "en-GB": "Commencement and settlement of legal proceedings"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:43:27Z",
+      "dateModified": "2025-06-23T19:43:27Z",
+      "externalReferenceCode": "5c0ffe66-4571-e0d0-6adf-9ea8daeb0ae3",
+      "id": 334547,
+      "key": "vatOnlyInvoices",
+      "name": "Vat only invoices",
+      "name_i18n": {
+        "en-GB": "Vat only invoices"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:44:07Z",
+      "dateModified": "2025-06-23T19:44:07Z",
+      "externalReferenceCode": "41a55b64-6c83-da79-9637-c53b0ce11481",
+      "id": 334548,
+      "key": "statutoryPaymentsCourtFees",
+      "name": "Statutory payments / court fees",
+      "name_i18n": {
+        "en-GB": "Statutory payments / court fees"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:44:29Z",
+      "dateModified": "2025-06-23T19:44:29Z",
+      "externalReferenceCode": "288167ab-128a-6d5b-5f0e-d959a722553a",
+      "id": 334549,
+      "key": "licensingAndRegulations",
+      "name": "Licensing and regulations",
+      "name_i18n": {
+        "en-GB": "Licensing and regulations"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:44:47Z",
+      "dateModified": "2025-06-23T19:44:47Z",
+      "externalReferenceCode": "dfb2be39-1d4c-6de1-0c47-d5ee5c869709",
+      "id": 334550,
+      "key": "locumVATPayments",
+      "name": "Locum VAT Payments",
+      "name_i18n": {
+        "en-GB": "Locum VAT Payments"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:45:42Z",
+      "dateModified": "2025-06-23T19:45:42Z",
+      "externalReferenceCode": "3a4a1e56-5ae0-87f8-f199-038af0f4ef92",
+      "id": 334551,
+      "key": "propertyChargesREVEX",
+      "name": "Property charges (REVEX)",
+      "name_i18n": {
+        "en-GB": "Property charges (REVEX)"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:46:10Z",
+      "dateModified": "2025-06-23T19:46:10Z",
+      "externalReferenceCode": "367cc319-0528-e86b-1047-18372de55f36",
+      "id": 334552,
+      "key": "volunteerPayments",
+      "name": "Volunteer payments",
+      "name_i18n": {
+        "en-GB": "Volunteer payments"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:46:28Z",
+      "dateModified": "2025-06-23T19:46:28Z",
+      "externalReferenceCode": "b25baf2a-726d-4e6e-1260-dda916a94c06",
+      "id": 334553,
+      "key": "exceptionalPayments",
+      "name": "Exceptional payments",
+      "name_i18n": {
+        "en-GB": "Exceptional payments"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:48:13Z",
+      "dateModified": "2025-06-23T19:48:13Z",
+      "externalReferenceCode": "67114592-3396-a927-6518-3972983cd826",
+      "id": 334554,
+      "key": "utilityPaymentsNotManagedInspiredEnergyServices",
+      "name": "Utility payments not managed Inspired Energy Services",
+      "name_i18n": {
+        "en-GB": "Utility payments not managed Inspired Energy Services"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:50:39Z",
+      "dateModified": "2025-06-23T19:50:39Z",
+      "externalReferenceCode": "1bbd0a06-e375-5fb1-2fd6-d76e6f2b9b24",
+      "id": 334559,
+      "key": "propertyChargesCAPEX",
+      "name": "Property charges (CAPEX)",
+      "name_i18n": {
+        "en-GB": "Property charges (CAPEX)"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:53:35Z",
+      "dateModified": "2025-06-23T19:53:35Z",
+      "externalReferenceCode": "e3bce872-116b-30e7-1e4f-2c6aea8757a6",
+      "id": 334560,
+      "key": "settlementAgreementFeesVatNotRecoverable",
+      "name": "Settlement agreement fees - vat not recoverable",
+      "name_i18n": {
+        "en-GB": "Settlement agreement fees - vat not recoverable"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:54:00Z",
+      "dateModified": "2025-06-23T19:54:00Z",
+      "externalReferenceCode": "cd6d72fd-c665-0bda-77b5-f739432356dc",
+      "id": 334561,
+      "key": "cEWE",
+      "name": "CEWE",
+      "name_i18n": {
+        "en-GB": "CEWE"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:54:29Z",
+      "dateModified": "2025-06-23T19:54:29Z",
+      "externalReferenceCode": "cd39ed0f-a86b-0c5c-05b6-7a3ba185b905",
+      "id": 334562,
+      "key": "mothercareRoyaltyPayments",
+      "name": "Mothercare royalty payments",
+      "name_i18n": {
+        "en-GB": "Mothercare royalty payments"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T19:55:11Z",
+      "dateModified": "2025-06-23T19:55:11Z",
+      "externalReferenceCode": "dc9f2dab-7bca-5fb6-0acb-c4b6cbffee3d",
+      "id": 334563,
+      "key": "paymentsMadeToBootsOpticiansFranchises",
+      "name": "Payments made to Boots Opticians franchises",
+      "name_i18n": {
+        "en-GB": "Payments made to Boots Opticians franchises"
+      },
+      "type": ""
+    }
+  ],
+  "name": "NOBI category",
+  "name_i18n": {
+    "en-GB": "NOBI category"
+  },
+  "system": false
+}
+Response headers
+ cache-control: no-cache,no-store 

@@ -1,0 +1,123 @@
+{
+  "actions": {
+    "permissions": {
+      "method": "PATCH",
+      "href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/334341"
+    },
+    "get": {
+      "method": "GET",
+      "href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/334341"
+    },
+    "update": {
+      "method": "PUT",
+      "href": "http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/334341"
+    }
+  },
+  "dateCreated": "2025-06-23T12:25:26Z",
+  "dateModified": "2025-06-23T12:34:50Z",
+  "externalReferenceCode": "319c3964-da4d-31f2-862a-43904391bff1",
+  "id": 334341,
+  "listTypeEntries": [
+    {
+      "dateCreated": "2025-06-23T12:25:50Z",
+      "dateModified": "2025-06-23T12:34:50Z",
+      "externalReferenceCode": "9d8f58fb-d297-6c47-4c74-a728fa30678b",
+      "id": 334342,
+      "key": "bootsUK",
+      "name": "Boots UK",
+      "name_i18n": {
+        "en-GB": "Boots UK"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T12:26:17Z",
+      "dateModified": "2025-06-23T12:34:50Z",
+      "externalReferenceCode": "3412e267-35e3-6e5a-85e1-571d41857d00",
+      "id": 334343,
+      "key": "bootsManagementServices",
+      "name": "Boots Management Services",
+      "name_i18n": {
+        "en-GB": "Boots Management Services"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T12:26:36Z",
+      "dateModified": "2025-06-23T12:34:50Z",
+      "externalReferenceCode": "01bc38ca-5242-de52-f8e9-8af6bbda78cb",
+      "id": 334344,
+      "key": "bootsROI",
+      "name": "Boots ROI",
+      "name_i18n": {
+        "en-GB": "Boots ROI"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T12:26:56Z",
+      "dateModified": "2025-06-23T12:34:50Z",
+      "externalReferenceCode": "8aa0aac2-b4a0-04e5-ef4c-d288350c1761",
+      "id": 334345,
+      "key": "bootsOpticians",
+      "name": "Boots Opticians",
+      "name_i18n": {
+        "en-GB": "Boots Opticians"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T12:30:19Z",
+      "dateModified": "2025-06-23T12:34:50Z",
+      "externalReferenceCode": "89928d66-144a-de89-b5c9-071fd17ca9ec",
+      "id": 334350,
+      "key": "retailPharmacyInternationalManagementServices",
+      "name": "Retail Pharmacy International Management Services",
+      "name_i18n": {
+        "en-GB": "Retail Pharmacy International Management Services"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T12:32:54Z",
+      "dateModified": "2025-06-23T12:34:50Z",
+      "externalReferenceCode": "b60132e8-f181-e411-7d81-0c96bcc48bbd",
+      "id": 334351,
+      "key": "theBootsCompany",
+      "name": "The Boots Company",
+      "name_i18n": {
+        "en-GB": "The Boots Company"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T12:33:43Z",
+      "dateModified": "2025-06-23T12:34:50Z",
+      "externalReferenceCode": "6bfa1e01-9055-1b12-645d-41afe6c73f29",
+      "id": 334352,
+      "key": "wBAPropcoCLLP",
+      "name": "WBA Propco C LLP",
+      "name_i18n": {
+        "en-GB": "WBA Propco C LLP"
+      },
+      "type": ""
+    },
+    {
+      "dateCreated": "2025-06-23T12:34:40Z",
+      "dateModified": "2025-06-23T12:34:50Z",
+      "externalReferenceCode": "6888afe2-3645-6cf2-e131-8ad102aa48e7",
+      "id": 334353,
+      "key": "aHITSL",
+      "name": "AHITSL",
+      "name_i18n": {
+        "en-GB": "AHITSL"
+      },
+      "type": ""
+    }
+  ],
+  "name": "Boots Company",
+  "name_i18n": {
+    "en-GB": "Boots Company"
+  },
+  "system": false
+}
