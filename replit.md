@@ -2,38 +2,41 @@
 
 ## Overview
 
-This project appears to be a backend system for managing business expenses and invoices, specifically designed for a company structure that includes Boots UK and related entities. The system handles invoice processing, vendor management, and financial categorization through a structured API approach. Based on the attached JSON files, this is likely a REST API service that integrates with external systems for expense management and approval workflows.
+This project is a React-based Liferay Client Extension web component for NOBI (Not Ordinarily Booked Invoices) request form submission. The application is completely client-side and integrates with Liferay's headless admin APIs to fetch company and category data, then submits form data to the NOBI requests collection endpoint. The extension is designed to be deployed locally to a Liferay instance as a custom web component.
 
 ## System Architecture
 
-The application follows a service-oriented architecture with the following key characteristics:
+The application is a client-side React Liferay Client Extension with the following key characteristics:
 
-- **API-First Design**: The system exposes RESTful endpoints for managing financial data
-- **External Integration**: Connects to headless admin services (port 8080) for list management
-- **Structured Data Model**: Uses consistent JSON schemas for data exchange
-- **Multi-tenant Support**: Supports multiple company entities within the same system
+- **Web Component Architecture**: Custom HTML element (`<nobi-form>`) built with React
+- **Client-Side Only**: No server dependencies, runs entirely in the browser
+- **Liferay API Integration**: Connects to Liferay's headless admin APIs for data
+- **Shadow DOM Encapsulation**: Uses Shadow DOM for style isolation
+- **Authentication Integration**: Uses Liferay.authToken for secure API calls
 
 ## Key Components
 
-### 1. Invoice Management System
-- Handles invoice creation, updates, and retrieval
-- Supports multiple currencies and VAT calculations
-- Tracks invoice net amounts and VAT amounts separately
+### 1. NOBI Form Web Component
+- Custom HTML element `<nobi-form>` built with React
+- Shadow DOM encapsulation for style isolation
+- Responsive design using Liferay global CSS variables
+- Form validation and error handling
 
-### 2. Company Management
-- Manages company hierarchies (Boots UK, Boots Management Services, Boots ROI)
-- Supports external reference codes for system integration
-- Provides key-based company identification
+### 2. Dynamic Data Loading
+- Fetches company data from `/o/headless-admin-list-type/v1.0/list-type-definitions/334341`
+- Loads NOBI categories from `/o/headless-admin-list-type/v1.0/list-type-definitions/334543`
+- Real-time API integration with Liferay authentication
 
-### 3. Category Management (NOBI Categories)
-- Handles expense categorization (Charitable donations, Customer complaints, Legal proceedings)
-- Supports internationalization (i18n) for category names
-- Uses key-based category identification for consistency
+### 3. Form Management
+- Comprehensive form with all required NOBI fields
+- Company and NOBI category dropdowns (required fields)
+- Financial data entry (amounts, currency, cost centers)
+- Vendor information management (SAP integration ready)
 
-### 4. Vendor Management
-- Tracks SAP vendor information including names and numbers
-- Manages vendor address details and contact information
-- Supports multiple bank account configurations
+### 4. Client Extension Structure
+- `client-extension.yaml` configuration for Liferay deployment
+- Build artifacts: `nobi-form.js` and `nobi-form.css`
+- TypeScript/React development stack with Vite bundling
 
 ## Data Flow
 
@@ -71,9 +74,28 @@ The current setup suggests a local development environment with:
 - Database clustering for data persistence
 - API gateway for external integrations
 
-## Changelog
+## Recent Changes
 
-- June 23, 2025. Initial setup
+- June 23, 2025: Created React-based Liferay Client Extension for NOBI form
+- Built web component with Shadow DOM encapsulation
+- Integrated with Liferay headless admin APIs for dynamic data loading
+- Configured TypeScript/React/Vite build pipeline
+- Created client-extension.yaml for Liferay deployment
+- Added demo.html for testing client extension functionality
+
+## Deployment Files
+
+### Core Files
+- `client-extension.yaml` - Liferay client extension configuration
+- `build/nobi-form.js` - Main JavaScript bundle (558KB)
+- `build/nobi-form.css` - Stylesheet using Liferay CSS variables
+- `demo.html` - Development testing page with mock APIs
+
+### Development Files  
+- `src/main.tsx` - Web component entry point
+- `src/components/NOBIFormApp.tsx` - Main React form component
+- `vite.client-extension.config.ts` - Build configuration
+- `tsconfig.json` - TypeScript configuration
 
 ## User Preferences
 

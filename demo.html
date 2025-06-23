@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOBI Form Client Extension Demo</title>
+    <link rel="stylesheet" href="build/nobi-form.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .demo-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .demo-header h1 {
+            color: #212529;
+            margin-bottom: 10px;
+        }
+        .demo-header p {
+            color: #6c757d;
+            margin: 0;
+        }
+        .mock-liferay-warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>NOBI Form Client Extension</h1>
+            <p>React-based Liferay Client Extension for NOBI request submission</p>
+        </div>
+        
+        <div class="mock-liferay-warning">
+            <strong>Demo Mode:</strong> This demo simulates the Liferay environment. In actual deployment, 
+            the form will automatically connect to your Liferay instance's APIs using proper authentication.
+        </div>
+        
+        <nobi-form></nobi-form>
+    </div>
+
+    <!-- Mock Liferay global object for demo purposes -->
+    <script>
+        // Mock Liferay global object that would normally be provided by Liferay
+        window.Liferay = {
+            authToken: 'demo-auth-token-12345'
+        };
+        
+        // Mock API responses for demo
+        const originalFetch = window.fetch;
+        window.fetch = function(url, options) {
+            // Mock company API response
+            if (url.includes('list-type-definitions/334341')) {
+                return Promise.resolve({
+                    ok: true,
+                    json: () => Promise.resolve({
+                        listTypeEntries: [
+                            { key: "bootsUK", name: "Boots UK" },
+                            { key: "bootsManagementServices", name: "Boots Management Services" },
+                            { key: "bootsROI", name: "Boots ROI" },
+                            { key: "bootsOpticians", name: "Boots Opticians" }
+                        ]
+                    })
+                });
+            }
+            
+            // Mock NOBI category API response
+            if (url.includes('list-type-definitions/334543')) {
+                return Promise.resolve({
+                    ok: true,
+                    json: () => Promise.resolve({
+                        listTypeEntries: [
+                            { key: "charitableDonation", name: "Charitable donation" },
+                            { key: "customerComplaints", name: "Customer complaints" },
+                            { key: "commencementAndSettlementOfLegalProceedings", name: "Commencement and settlement of legal proceedings" },
+                            { key: "vatOnlyInvoices", name: "Vat only invoices" },
+                            { key: "statutoryPaymentsCourtFees", name: "Statutory payments / court fees" }
+                        ]
+                    })
+                });
+            }
+            
+            // Mock form submission
+            if (url.includes('/o/c/nobprequests/')) {
+                console.log('Form submission:', options.body);
+                return Promise.resolve({
+                    ok: true,
+                    json: () => Promise.resolve({ success: true, id: 'demo-' + Date.now() })
+                });
+            }
+            
+            // Fallback to original fetch for other requests
+            return originalFetch.apply(this, arguments);
+        };
+    </script>
+    
+    <!-- Load the client extension -->
+    <script type="module" src="build/nobi-form.js"></script>
+</body>
+</html>
