@@ -76,7 +76,11 @@ The current setup suggests a local development environment with:
 
 ## Recent Changes
 
-- June 24, 2025: Converted to multi-page form with progress tracking and currency dropdown
+- June 24, 2025: Made all form fields required with validation
+- Auto-fills requestor names from user account API (/o/headless-admin-user/v1.0/my-user-account)
+- Auto-generates random 4-digit company number when company is selected
+- Updated page indicators to use var(--color-brand-primary) for brand consistency
+- Converted to multi-page form with progress tracking and currency dropdown
 - Added currency select with flags (🇺🇸 USD, 🇪🇺 EUR, etc.) that submits symbols only
 - Moved requestor fields to top and split form into "About You" and "About the Vendor" sections
 - Implemented animated progress bar showing completion percentage

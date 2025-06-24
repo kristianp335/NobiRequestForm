@@ -1,0 +1,85 @@
+{
+  "accountBriefs": [],
+  "actions": {
+    "get-user-account-by-external-reference-code": {
+      "method": "GET",
+      "href": "http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/by-external-reference-code/{externalReferenceCode}"
+    },
+    "put-user-account": {
+      "method": "PUT",
+      "href": "http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/309007"
+    },
+    "delete-user-account": {
+      "method": "DELETE",
+      "href": "http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/309007"
+    },
+    "get-user-account": {
+      "method": "GET",
+      "href": "http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/309007"
+    },
+    "delete-user-account-by-external-reference-code": {
+      "method": "DELETE",
+      "href": "http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/by-external-reference-code/{externalReferenceCode}"
+    },
+    "put-user-account-by-external-reference-code": {
+      "method": "PUT",
+      "href": "http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/by-external-reference-code/{externalReferenceCode}"
+    },
+    "get-my-user-account": {
+      "method": "GET",
+      "href": "http://localhost:8080/o/headless-admin-user/v1.0/my-user-account"
+    },
+    "patch-user-account": {
+      "method": "PATCH",
+      "href": "http://localhost:8080/o/headless-admin-user/v1.0/user-accounts/309007"
+    }
+  },
+  "additionalName": "",
+  "alternateName": "nick.1",
+  "birthDate": "1970-01-01T00:00:00Z",
+  "customFields": [],
+  "dashboardURL": "/user/nick.1",
+  "dateCreated": "2025-03-12T13:57:50Z",
+  "dateModified": "2025-06-24T09:36:20Z",
+  "emailAddress": "nick@boots.com",
+  "externalReferenceCode": "8803d790-ebd3-fe93-4bec-bc29bbb2e5d3",
+  "familyName": "Hammer-Boot",
+  "givenName": "Nick",
+  "id": 309007,
+  "image": "/image/user_portrait?img_id=309031&img_id_token=HUczKWe1d7VmZar6z4pStf%2BYImE%3D&t=1750781536345",
+  "imageId": 309031,
+  "jobTitle": "",
+  "keywords": [],
+  "languageDisplayName": "English (United Kingdom)",
+  "languageId": "en_GB",
+  "lastLoginDate": "2025-06-24T15:11:09Z",
+  "name": "Nick Hammer-Boot",
+  "organizationBriefs": [],
+  "profileURL": "/web/nick.1",
+  "roleBriefs": [
+    {
+      "id": 20103,
+      "name": "Administrator"
+    },
+    {
+      "id": 20109,
+      "name": "User"
+    }
+  ],
+  "siteBriefs": [],
+  "status": "Active",
+  "userAccountContactInformation": {
+    "emailAddresses": [],
+    "facebook": "",
+    "jabber": "",
+    "postalAddresses": [],
+    "skype": "",
+    "sms": "",
+    "telephones": [],
+    "twitter": "",
+    "webUrls": []
+  },
+  "userGroupBriefs": [],
+  "r_perscriptionToUsers_c_perscriptionId": 0,
+  "r_perscriptionToUsers_c_perscriptionERC": ""
+}

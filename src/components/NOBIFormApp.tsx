@@ -100,6 +100,24 @@ const NOBIFormApp: React.FC = () => {
     return (window as any).Liferay?.authToken || ''
   }
 
+  // Fetch user account from Liferay API
+  const fetchUserAccount = async () => {
+    try {
+      const authToken = getAuthToken()
+      const response = await fetch(`/o/headless-admin-user/v1.0/my-user-account?p_auth=${authToken}`)
+      const data = await response.json()
+      if (data.givenName && data.familyName) {
+        setFormData(prev => ({
+          ...prev,
+          requestorFirstName: data.givenName,
+          requestorSurname: data.familyName
+        }))
+      }
+    } catch (error) {
+      console.error('Error fetching user account:', error)
+    }
+  }
+
   // Fetch companies from Liferay API
   const fetchCompanies = async () => {
     try {
@@ -141,7 +159,7 @@ const NOBIFormApp: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       setLoading(true)
-      await Promise.all([fetchCompanies(), fetchNOBICategories()])
+      await Promise.all([fetchUserAccount(), fetchCompanies(), fetchNOBICategories()])
       setLoading(false)
     }
     
@@ -160,6 +178,9 @@ const NOBIFormApp: React.FC = () => {
     const selectedCompany = companies.find(c => c.key === selectedKey)
     if (selectedCompany) {
       handleInputChange('company', selectedCompany)
+      // Auto-generate random 4-digit company number
+      const randomCompanyNumber = Math.floor(1000 + Math.random() * 9000).toString()
+      handleInputChange('companyNumber', randomCompanyNumber)
     }
   }
 
@@ -327,12 +348,13 @@ const NOBIFormApp: React.FC = () => {
             
             <div className="col-md-6">
               <div className="form-group">
-                <label className="control-label">Company Number</label>
+                <label className="control-label">Company Number *</label>
                 <input 
                   type="text" 
                   className="form-control" 
                   value={formData.companyNumber}
                   onChange={(e) => handleInputChange('companyNumber', e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -341,24 +363,26 @@ const NOBIFormApp: React.FC = () => {
           <div className="row">
             <div className="col-md-6">
               <div className="form-group">
-                <label className="control-label">Contact Number</label>
+                <label className="control-label">Contact Number *</label>
                 <input 
                   type="text" 
                   className="form-control" 
                   value={formData.contactNumber}
                   onChange={(e) => handleInputChange('contactNumber', e.target.value)}
+                  required
                 />
               </div>
             </div>
             
             <div className="col-md-6">
               <div className="form-group">
-                <label className="control-label">Cost Centre</label>
+                <label className="control-label">Cost Centre *</label>
                 <input 
                   type="text" 
                   className="form-control" 
                   value={formData.costCentre}
                   onChange={(e) => handleInputChange('costCentre', e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -380,34 +404,37 @@ const NOBIFormApp: React.FC = () => {
             
             <div className="col-md-6">
               <div className="form-group">
-                <label className="control-label">General Ledger To Be Charged</label>
+                <label className="control-label">General Ledger To Be Charged *</label>
                 <input 
                   type="text" 
                   className="form-control" 
                   value={formData.generalLedgerToBeCharged}
                   onChange={(e) => handleInputChange('generalLedgerToBeCharged', e.target.value)}
+                  required
                 />
               </div>
             </div>
           </div>
 
           <div className="form-group">
-            <label className="control-label">Line Manager Full Name</label>
+            <label className="control-label">Line Manager Full Name *</label>
             <input 
               type="text" 
               className="form-control" 
               value={formData.lineManagerFullname}
               onChange={(e) => handleInputChange('lineManagerFullname', e.target.value)}
+              required
             />
           </div>
 
           <div className="form-group">
-            <label className="control-label">Requesting Department/Store</label>
+            <label className="control-label">Requesting Department/Store *</label>
             <input 
               type="text" 
               className="form-control" 
               value={formData.requestingDepartmentStore}
               onChange={(e) => handleInputChange('requestingDepartmentStore', e.target.value)}
+              required
             />
           </div>
         </div>
@@ -420,46 +447,50 @@ const NOBIFormApp: React.FC = () => {
           <div className="row">
             <div className="col-md-6">
               <div className="form-group">
-                <label className="control-label">SAP Vendor Name</label>
+                <label className="control-label">SAP Vendor Name *</label>
                 <input 
                   type="text" 
                   className="form-control" 
                   value={formData.sAPVendorName}
                   onChange={(e) => handleInputChange('sAPVendorName', e.target.value)}
+                  required
                 />
               </div>
             </div>
             
             <div className="col-md-6">
               <div className="form-group">
-                <label className="control-label">SAP Vendor Number</label>
+                <label className="control-label">SAP Vendor Number *</label>
                 <input 
                   type="text" 
                   className="form-control" 
                   value={formData.sAPVendorNumber}
                   onChange={(e) => handleInputChange('sAPVendorNumber', e.target.value)}
+                  required
                 />
               </div>
             </div>
           </div>
 
           <div className="form-group">
-            <label className="control-label">Vendor Name</label>
+            <label className="control-label">Vendor Name *</label>
             <input 
               type="text" 
               className="form-control" 
               value={formData.vendorName}
               onChange={(e) => handleInputChange('vendorName', e.target.value)}
+              required
             />
           </div>
 
           <div className="form-group">
-            <label className="control-label">Vendor Address Details</label>
+            <label className="control-label">Vendor Address Details *</label>
             <textarea 
               className="form-control" 
               rows={3}
               value={formData.vendorAddressDetails}
               onChange={(e) => handleInputChange('vendorAddressDetails', e.target.value)}
+              required
             />
           </div>
 
@@ -485,12 +516,13 @@ const NOBIFormApp: React.FC = () => {
             
             <div className="col-md-6">
               <div className="form-group">
-                <label className="control-label">Multiple Bank Account Number</label>
+                <label className="control-label">Multiple Bank Account Number *</label>
                 <input 
                   type="text" 
                   className="form-control" 
                   value={formData.multipleBankAccountNumberToBeUsed}
                   onChange={(e) => handleInputChange('multipleBankAccountNumberToBeUsed', e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -499,11 +531,12 @@ const NOBIFormApp: React.FC = () => {
           <div className="row">
             <div className="col-md-6">
               <div className="form-group">
-                <label className="control-label">Currency</label>
+                <label className="control-label">Currency *</label>
                 <select 
                   className="form-control" 
                   value={formData.currency}
                   onChange={(e) => handleInputChange('currency', e.target.value)}
+                  required
                 >
                   <option value="">Select Currency</option>
                   {currencies.map(currency => (
@@ -517,13 +550,14 @@ const NOBIFormApp: React.FC = () => {
             
             <div className="col-md-6">
               <div className="form-group">
-                <label className="control-label">Invoice Net Amount</label>
+                <label className="control-label">Invoice Net Amount *</label>
                 <input 
                   type="number" 
                   step="0.01"
                   className="form-control" 
                   value={formData.invoiceNetAmount}
                   onChange={(e) => handleInputChange('invoiceNetAmount', parseFloat(e.target.value) || 0)}
+                  required
                 />
               </div>
             </div>
@@ -532,26 +566,28 @@ const NOBIFormApp: React.FC = () => {
           <div className="row">
             <div className="col-md-6">
               <div className="form-group">
-                <label className="control-label">Invoice VAT Amount</label>
+                <label className="control-label">Invoice VAT Amount *</label>
                 <input 
                   type="number" 
                   step="0.01"
                   className="form-control" 
                   value={formData.invoiceVatAmount}
                   onChange={(e) => handleInputChange('invoiceVatAmount', parseFloat(e.target.value) || 0)}
+                  required
                 />
               </div>
             </div>
             
             <div className="col-md-6">
               <div className="form-group">
-                <label className="control-label">Total Price</label>
+                <label className="control-label">Total Price *</label>
                 <input 
                   type="number" 
                   step="0.01"
                   className="form-control" 
                   value={formData.totalPrice}
                   onChange={(e) => handleInputChange('totalPrice', parseFloat(e.target.value) || 0)}
+                  required
                 />
               </div>
             </div>
@@ -631,7 +667,7 @@ const NOBIFormApp: React.FC = () => {
           transition: background-color 0.3s ease;
         }
         .page-dot.active {
-          background-color: #007bff;
+          background-color: var(--color-brand-primary, #007bff);
         }
         .section-title {
           font-size: 1.25rem;
