@@ -76,7 +76,8 @@ The current setup suggests a local development environment with:
 
 ## Recent Changes
 
-- June 24, 2025: Reordered form fields to match exact sequence from example JSON structure
+- June 24, 2025: Moved financial fields and category selection to bottom of form
+- Reordered form fields to match exact sequence from example JSON structure
 - Converted to use standard Liferay CSS classes (sheet, form-group, control-label, etc.)
 - Reduced custom CSS from 140 lines to minimal 4 lines
 - Fixed Shadow DOM conflict error when multiple client extensions on same page
