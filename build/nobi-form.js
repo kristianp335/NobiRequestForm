@@ -12151,7 +12151,16 @@ const NOBIFormApp = () => {
       setLoading(false);
     };
     loadData();
+    const savedDarkMode = localStorage.getItem("nobi-form-dark-mode");
+    if (savedDarkMode === "true") {
+      setIsDarkMode(true);
+    }
   }, []);
+  const toggleDarkMode = () => {
+    const newDarkMode = !isDarkMode;
+    setIsDarkMode(newDarkMode);
+    localStorage.setItem("nobi-form-dark-mode", newDarkMode.toString());
+  };
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,

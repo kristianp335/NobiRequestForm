@@ -166,7 +166,19 @@ const NOBIFormApp: React.FC = () => {
     }
     
     loadData()
+
+    // Check for saved dark mode preference
+    const savedDarkMode = localStorage.getItem('nobi-form-dark-mode')
+    if (savedDarkMode === 'true') {
+      setIsDarkMode(true)
+    }
   }, [])
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !isDarkMode
+    setIsDarkMode(newDarkMode)
+    localStorage.setItem('nobi-form-dark-mode', newDarkMode.toString())
+  }
 
   const handleInputChange = (field: keyof FormData, value: any) => {
     setFormData(prev => ({
