@@ -76,11 +76,13 @@ The current setup suggests a local development environment with:
 
 ## Recent Changes
 
-- June 24, 2025: Fixed client-extension.yaml YAML formatting issues
+- June 24, 2025: Fixed Shadow DOM conflict error when multiple client extensions on same page
+- Removed Shadow DOM usage and switched to regular DOM with CSS scoping
+- Added initialization checks to prevent React root conflicts
+- Updated CSS with .nobi-form-wrapper prefix for proper style isolation
+- Fixed client-extension.yaml YAML formatting issues
 - Resolved Windows build compatibility by removing Unix-specific commands
-- Updated Vite config with cross-platform CSS copying plugin
-- Successfully tested build process - generates 558KB JavaScript bundle
-- Confirmed all deployment files ready for Liferay workspace
+- Successfully tested build process - generates 559KB JavaScript bundle
 - June 23, 2025: Created React-based Liferay Client Extension for NOBI form
 - Built web component with Shadow DOM encapsulation
 - Integrated with Liferay headless admin APIs for dynamic data loading

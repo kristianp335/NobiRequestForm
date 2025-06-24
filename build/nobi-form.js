@@ -12183,6 +12183,13 @@ const NOBIFormApp = () => {
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "nobi-form-container", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("style", { children: `
+        .nobi-form-wrapper {
+          all: initial;
+          font-family: inherit;
+        }
+        .nobi-form-wrapper * {
+          box-sizing: border-box;
+        }
         .nobi-form-container {
           max-width: 800px;
           margin: 0 auto;
@@ -12604,21 +12611,28 @@ class NOBIFormElement extends HTMLElement {
   constructor() {
     super(...arguments);
     this.root = null;
+    this.initialized = false;
   }
   connectedCallback() {
-    const shadowRoot = this.attachShadow({ mode: "open" });
+    if (this.initialized) return;
     const container = document.createElement("div");
-    shadowRoot.appendChild(container);
+    container.className = "nobi-form-wrapper";
+    this.appendChild(container);
     this.root = clientExports.createRoot(container);
     this.root.render(/* @__PURE__ */ jsxRuntimeExports.jsx(NOBIFormApp, {}));
+    this.initialized = true;
   }
   disconnectedCallback() {
     if (this.root) {
       this.root.unmount();
+      this.root = null;
     }
+    this.initialized = false;
   }
 }
-customElements.define("nobi-form", NOBIFormElement);
+if (!customElements.get("nobi-form")) {
+  customElements.define("nobi-form", NOBIFormElement);
+}
 export {
   NOBIFormElement as default
 };

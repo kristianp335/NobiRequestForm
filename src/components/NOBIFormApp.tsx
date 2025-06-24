@@ -198,6 +198,13 @@ const NOBIFormApp: React.FC = () => {
   return (
     <div className="nobi-form-container">
       <style>{`
+        .nobi-form-wrapper {
+          all: initial;
+          font-family: inherit;
+        }
+        .nobi-form-wrapper * {
+          box-sizing: border-box;
+        }
         .nobi-form-container {
           max-width: 800px;
           margin: 0 auto;
