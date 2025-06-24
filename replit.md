@@ -76,14 +76,15 @@ The current setup suggests a local development environment with:
 
 ## Recent Changes
 
-- June 24, 2025: Converted to use standard Liferay CSS classes (sheet, form-group, control-label, etc.)
+- June 24, 2025: Reordered form fields to match exact sequence from example JSON structure
+- Converted to use standard Liferay CSS classes (sheet, form-group, control-label, etc.)
 - Reduced custom CSS from 140 lines to minimal 4 lines
 - Fixed Shadow DOM conflict error when multiple client extensions on same page
 - Removed Shadow DOM usage and switched to regular DOM
 - Added initialization checks to prevent React root conflicts
 - Fixed client-extension.yaml YAML formatting issues
 - Resolved Windows build compatibility by removing Unix-specific commands
-- Successfully tested build process - generates 559KB JavaScript bundle
+- Successfully tested build process - generates 556KB JavaScript bundle
 - June 23, 2025: Created React-based Liferay Client Extension for NOBI form
 - Built web component with Shadow DOM encapsulation
 - Integrated with Liferay headless admin APIs for dynamic data loading
