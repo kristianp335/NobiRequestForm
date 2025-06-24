@@ -25,8 +25,8 @@ interface FormData {
   currency: string
   date: string
   generalLedgerToBeCharged: string
-  invoiceNetAmount: number
-  invoiceVatAmount: number
+  invoiceNetAmount: string | number
+  invoiceVatAmount: string | number
   lineManagerFullname: string
   multipleBankAccountNumberToBeUsed: string
   nOBICategory: NOBICategory
@@ -35,7 +35,7 @@ interface FormData {
   requestorSurname: string
   sAPVendorName: string
   sAPVendorNumber: string
-  totalPrice: number
+  totalPrice: string | number
   vendorAddressDetails: string
   vendorName: string
 }
@@ -47,6 +47,7 @@ const NOBIFormApp: React.FC = () => {
   const [submitting, setSubmitting] = useState(false)
   const [message, setMessage] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
+  const [isTransitioning, setIsTransitioning] = useState(false)
   const totalPages = 2
 
   const currencies: Currency[] = [
@@ -80,8 +81,8 @@ const NOBIFormApp: React.FC = () => {
     currency: '',
     date: new Date().toISOString().split('T')[0],
     generalLedgerToBeCharged: '',
-    invoiceNetAmount: 0,
-    invoiceVatAmount: 0,
+    invoiceNetAmount: '',
+    invoiceVatAmount: '',
     lineManagerFullname: '',
     multipleBankAccountNumberToBeUsed: '',
     nOBICategory: { key: '', name: '' },
@@ -90,7 +91,7 @@ const NOBIFormApp: React.FC = () => {
     requestorSurname: '',
     sAPVendorName: '',
     sAPVendorNumber: '',
-    totalPrice: 0,
+    totalPrice: '',
     vendorAddressDetails: '',
     vendorName: ''
   })
@@ -213,22 +214,54 @@ const NOBIFormApp: React.FC = () => {
     if (formData.nOBICategory.key) completedFields++
     if (formData.multipleBankAccountNumberToBeUsed) completedFields++
     if (formData.currency) completedFields++
-    if (formData.invoiceNetAmount > 0) completedFields++
-    if (formData.invoiceVatAmount > 0) completedFields++
-    if (formData.totalPrice > 0) completedFields++
+    if (formData.invoiceNetAmount && parseFloat(formData.invoiceNetAmount.toString()) > 0) completedFields++
+    if (formData.invoiceVatAmount && parseFloat(formData.invoiceVatAmount.toString()) > 0) completedFields++
+    if (formData.totalPrice && parseFloat(formData.totalPrice.toString()) > 0) completedFields++
     
     return Math.round((completedFields / totalFields) * 100)
   }
 
   const handleNext = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1)
+    if (currentPage < totalPages && !isTransitioning) {
+      setIsTransitioning(true)
+      setTimeout(() => {
+        setCurrentPage(currentPage + 1)
+        setIsTransitioning(false)
+      }, 150)
     }
   }
 
   const handlePrev = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1)
+    if (currentPage > 1 && !isTransitioning) {
+      setIsTransitioning(true)
+      setTimeout(() => {
+        setCurrentPage(currentPage - 1)
+        setIsTransitioning(false)
+      }, 150)
+    }
+  }
+
+  const validateAmount = (value: string): string => {
+    if (!value) return ''
+    
+    const numValue = parseFloat(value)
+    if (isNaN(numValue)) return 'Please enter a valid number'
+    if (numValue > 100000) return 'Amount cannot exceed £100,000'
+    if (numValue < 0) return 'Amount cannot be negative'
+    
+    // Check for exactly 2 decimal places
+    const decimalMatch = value.match(/\.(\d+)$/)
+    if (decimalMatch && decimalMatch[1].length !== 2) {
+      return 'Please enter exactly 2 decimal places (e.g., 123.45)'
+    }
+    
+    return ''
+  }
+
+  const handleAmountChange = (field: keyof FormData, value: string) => {
+    // Allow empty string, numbers, and decimal point
+    if (value === '' || /^\d*\.?\d{0,2}$/.test(value)) {
+      handleInputChange(field, value)
     }
   }
 
@@ -240,11 +273,14 @@ const NOBIFormApp: React.FC = () => {
     try {
       const authToken = getAuthToken()
       
-      // Convert currency code to symbol for submission
+      // Convert currency code to symbol and ensure numeric values for submission
       const selectedCurrency = currencies.find(c => c.code === formData.currency)
       const submissionData = {
         ...formData,
-        currency: selectedCurrency ? selectedCurrency.symbol : formData.currency
+        currency: selectedCurrency ? selectedCurrency.symbol : formData.currency,
+        invoiceNetAmount: parseFloat(formData.invoiceNetAmount.toString()) || 0,
+        invoiceVatAmount: parseFloat(formData.invoiceVatAmount.toString()) || 0,
+        totalPrice: parseFloat(formData.totalPrice.toString()) || 0
       }
       
       const response = await fetch(`/o/c/nobprequests/?p_auth=${authToken}`, {
@@ -266,8 +302,8 @@ const NOBIFormApp: React.FC = () => {
           currency: '',
           date: new Date().toISOString().split('T')[0],
           generalLedgerToBeCharged: '',
-          invoiceNetAmount: 0,
-          invoiceVatAmount: 0,
+          invoiceNetAmount: '',
+          invoiceVatAmount: '',
           lineManagerFullname: '',
           multipleBankAccountNumberToBeUsed: '',
           nOBICategory: { key: '', name: '' },
@@ -276,7 +312,7 @@ const NOBIFormApp: React.FC = () => {
           requestorSurname: '',
           sAPVendorName: '',
           sAPVendorNumber: '',
-          totalPrice: 0,
+          totalPrice: '',
           vendorAddressDetails: '',
           vendorName: ''
         })
@@ -295,7 +331,7 @@ const NOBIFormApp: React.FC = () => {
   const renderPageContent = () => {
     if (currentPage === 1) {
       return (
-        <div>
+        <div className={`page-content ${isTransitioning ? 'transitioning' : ''}`}>
           <h3 className="section-title">Section 1: About You</h3>
           
           <div className="row">
@@ -441,7 +477,7 @@ const NOBIFormApp: React.FC = () => {
       )
     } else {
       return (
-        <div>
+        <div className={`page-content ${isTransitioning ? 'transitioning' : ''}`}>
           <h3 className="section-title">Section 2: About the Vendor</h3>
           
           <div className="row">
@@ -552,13 +588,16 @@ const NOBIFormApp: React.FC = () => {
               <div className="form-group">
                 <label className="control-label">Invoice Net Amount *</label>
                 <input 
-                  type="number" 
-                  step="0.01"
-                  className="form-control" 
+                  type="text" 
+                  className={`form-control ${validateAmount(formData.invoiceNetAmount.toString()) ? 'error' : ''}`}
                   value={formData.invoiceNetAmount}
-                  onChange={(e) => handleInputChange('invoiceNetAmount', parseFloat(e.target.value) || 0)}
+                  onChange={(e) => handleAmountChange('invoiceNetAmount', e.target.value)}
+                  placeholder="0.00"
                   required
                 />
+                {validateAmount(formData.invoiceNetAmount.toString()) && (
+                  <div className="form-error">{validateAmount(formData.invoiceNetAmount.toString())}</div>
+                )}
               </div>
             </div>
           </div>
@@ -568,13 +607,16 @@ const NOBIFormApp: React.FC = () => {
               <div className="form-group">
                 <label className="control-label">Invoice VAT Amount *</label>
                 <input 
-                  type="number" 
-                  step="0.01"
-                  className="form-control" 
+                  type="text" 
+                  className={`form-control ${validateAmount(formData.invoiceVatAmount.toString()) ? 'error' : ''}`}
                   value={formData.invoiceVatAmount}
-                  onChange={(e) => handleInputChange('invoiceVatAmount', parseFloat(e.target.value) || 0)}
+                  onChange={(e) => handleAmountChange('invoiceVatAmount', e.target.value)}
+                  placeholder="0.00"
                   required
                 />
+                {validateAmount(formData.invoiceVatAmount.toString()) && (
+                  <div className="form-error">{validateAmount(formData.invoiceVatAmount.toString())}</div>
+                )}
               </div>
             </div>
             
@@ -582,13 +624,16 @@ const NOBIFormApp: React.FC = () => {
               <div className="form-group">
                 <label className="control-label">Total Price *</label>
                 <input 
-                  type="number" 
-                  step="0.01"
-                  className="form-control" 
+                  type="text" 
+                  className={`form-control ${validateAmount(formData.totalPrice.toString()) ? 'error' : ''}`}
                   value={formData.totalPrice}
-                  onChange={(e) => handleInputChange('totalPrice', parseFloat(e.target.value) || 0)}
+                  onChange={(e) => handleAmountChange('totalPrice', e.target.value)}
+                  placeholder="0.00"
                   required
                 />
+                {validateAmount(formData.totalPrice.toString()) && (
+                  <div className="form-error">{validateAmount(formData.totalPrice.toString())}</div>
+                )}
               </div>
             </div>
           </div>
@@ -685,6 +730,35 @@ const NOBIFormApp: React.FC = () => {
           margin-bottom: 1.5rem;
           padding-bottom: 0.5rem;
           border-bottom: 2px solid var(--btn-primary-background-color, #007bff);
+        }
+        .page-content {
+          animation: fadeInSlide 0.4s ease-out;
+          opacity: 1;
+          transform: translateX(0);
+        }
+        .page-content.transitioning {
+          opacity: 0;
+          transform: translateX(-10px);
+          transition: opacity 0.15s ease-in, transform 0.15s ease-in;
+        }
+        @keyframes fadeInSlide {
+          0% {
+            opacity: 0;
+            transform: translateX(20px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        .form-error {
+          color: #dc3545;
+          font-size: 0.875rem;
+          margin-top: 0.25rem;
+        }
+        .form-control.error {
+          border-color: #dc3545;
+          box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
         }
       `}</style>
       

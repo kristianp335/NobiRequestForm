@@ -12045,6 +12045,7 @@ const NOBIFormApp = () => {
   const [submitting, setSubmitting] = reactExports.useState(false);
   const [message, setMessage] = reactExports.useState("");
   const [currentPage, setCurrentPage] = reactExports.useState(1);
+  const [isTransitioning, setIsTransitioning] = reactExports.useState(false);
   const totalPages = 2;
   const currencies = [
     { code: "USD", symbol: "$", name: "US Dollar", flag: "🇺🇸" },
@@ -12076,8 +12077,8 @@ const NOBIFormApp = () => {
     currency: "",
     date: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
     generalLedgerToBeCharged: "",
-    invoiceNetAmount: 0,
-    invoiceVatAmount: 0,
+    invoiceNetAmount: "",
+    invoiceVatAmount: "",
     lineManagerFullname: "",
     multipleBankAccountNumberToBeUsed: "",
     nOBICategory: { key: "", name: "" },
@@ -12086,7 +12087,7 @@ const NOBIFormApp = () => {
     requestorSurname: "",
     sAPVendorName: "",
     sAPVendorNumber: "",
-    totalPrice: 0,
+    totalPrice: "",
     vendorAddressDetails: "",
     vendorName: ""
   });
@@ -12192,19 +12193,44 @@ const NOBIFormApp = () => {
     if (formData.nOBICategory.key) completedFields++;
     if (formData.multipleBankAccountNumberToBeUsed) completedFields++;
     if (formData.currency) completedFields++;
-    if (formData.invoiceNetAmount > 0) completedFields++;
-    if (formData.invoiceVatAmount > 0) completedFields++;
-    if (formData.totalPrice > 0) completedFields++;
+    if (formData.invoiceNetAmount && parseFloat(formData.invoiceNetAmount.toString()) > 0) completedFields++;
+    if (formData.invoiceVatAmount && parseFloat(formData.invoiceVatAmount.toString()) > 0) completedFields++;
+    if (formData.totalPrice && parseFloat(formData.totalPrice.toString()) > 0) completedFields++;
     return Math.round(completedFields / totalFields * 100);
   };
   const handleNext = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+    if (currentPage < totalPages && !isTransitioning) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentPage(currentPage + 1);
+        setIsTransitioning(false);
+      }, 150);
     }
   };
   const handlePrev = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+    if (currentPage > 1 && !isTransitioning) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentPage(currentPage - 1);
+        setIsTransitioning(false);
+      }, 150);
+    }
+  };
+  const validateAmount = (value) => {
+    if (!value) return "";
+    const numValue = parseFloat(value);
+    if (isNaN(numValue)) return "Please enter a valid number";
+    if (numValue > 1e5) return "Amount cannot exceed £100,000";
+    if (numValue < 0) return "Amount cannot be negative";
+    const decimalMatch = value.match(/\.(\d+)$/);
+    if (decimalMatch && decimalMatch[1].length !== 2) {
+      return "Please enter exactly 2 decimal places (e.g., 123.45)";
+    }
+    return "";
+  };
+  const handleAmountChange = (field, value) => {
+    if (value === "" || /^\d*\.?\d{0,2}$/.test(value)) {
+      handleInputChange(field, value);
     }
   };
   const handleSubmit = async (e) => {
@@ -12216,7 +12242,10 @@ const NOBIFormApp = () => {
       const selectedCurrency = currencies.find((c) => c.code === formData.currency);
       const submissionData = {
         ...formData,
-        currency: selectedCurrency ? selectedCurrency.symbol : formData.currency
+        currency: selectedCurrency ? selectedCurrency.symbol : formData.currency,
+        invoiceNetAmount: parseFloat(formData.invoiceNetAmount.toString()) || 0,
+        invoiceVatAmount: parseFloat(formData.invoiceVatAmount.toString()) || 0,
+        totalPrice: parseFloat(formData.totalPrice.toString()) || 0
       };
       const response = await fetch(`/o/c/nobprequests/?p_auth=${authToken}`, {
         method: "POST",
@@ -12235,8 +12264,8 @@ const NOBIFormApp = () => {
           currency: "",
           date: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
           generalLedgerToBeCharged: "",
-          invoiceNetAmount: 0,
-          invoiceVatAmount: 0,
+          invoiceNetAmount: "",
+          invoiceVatAmount: "",
           lineManagerFullname: "",
           multipleBankAccountNumberToBeUsed: "",
           nOBICategory: { key: "", name: "" },
@@ -12245,7 +12274,7 @@ const NOBIFormApp = () => {
           requestorSurname: "",
           sAPVendorName: "",
           sAPVendorNumber: "",
-          totalPrice: 0,
+          totalPrice: "",
           vendorAddressDetails: "",
           vendorName: ""
         });
@@ -12262,7 +12291,7 @@ const NOBIFormApp = () => {
   };
   const renderPageContent = () => {
     if (currentPage === 1) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `page-content ${isTransitioning ? "transitioning" : ""}`, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "section-title", children: "Section 1: About You" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "row", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
@@ -12407,7 +12436,7 @@ const NOBIFormApp = () => {
         ] })
       ] });
     } else {
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `page-content ${isTransitioning ? "transitioning" : ""}`, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "section-title", children: "Section 2: About the Vendor" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "row", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
@@ -12522,14 +12551,15 @@ const NOBIFormApp = () => {
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "input",
               {
-                type: "number",
-                step: "0.01",
-                className: "form-control",
+                type: "text",
+                className: `form-control ${validateAmount(formData.invoiceNetAmount.toString()) ? "error" : ""}`,
                 value: formData.invoiceNetAmount,
-                onChange: (e) => handleInputChange("invoiceNetAmount", parseFloat(e.target.value) || 0),
+                onChange: (e) => handleAmountChange("invoiceNetAmount", e.target.value),
+                placeholder: "0.00",
                 required: true
               }
-            )
+            ),
+            validateAmount(formData.invoiceNetAmount.toString()) && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "form-error", children: validateAmount(formData.invoiceNetAmount.toString()) })
           ] }) })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "row", children: [
@@ -12538,28 +12568,30 @@ const NOBIFormApp = () => {
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "input",
               {
-                type: "number",
-                step: "0.01",
-                className: "form-control",
+                type: "text",
+                className: `form-control ${validateAmount(formData.invoiceVatAmount.toString()) ? "error" : ""}`,
                 value: formData.invoiceVatAmount,
-                onChange: (e) => handleInputChange("invoiceVatAmount", parseFloat(e.target.value) || 0),
+                onChange: (e) => handleAmountChange("invoiceVatAmount", e.target.value),
+                placeholder: "0.00",
                 required: true
               }
-            )
+            ),
+            validateAmount(formData.invoiceVatAmount.toString()) && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "form-error", children: validateAmount(formData.invoiceVatAmount.toString()) })
           ] }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Total Price *" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "input",
               {
-                type: "number",
-                step: "0.01",
-                className: "form-control",
+                type: "text",
+                className: `form-control ${validateAmount(formData.totalPrice.toString()) ? "error" : ""}`,
                 value: formData.totalPrice,
-                onChange: (e) => handleInputChange("totalPrice", parseFloat(e.target.value) || 0),
+                onChange: (e) => handleAmountChange("totalPrice", e.target.value),
+                placeholder: "0.00",
                 required: true
               }
-            )
+            ),
+            validateAmount(formData.totalPrice.toString()) && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "form-error", children: validateAmount(formData.totalPrice.toString()) })
           ] }) })
         ] })
       ] });
@@ -12651,6 +12683,35 @@ const NOBIFormApp = () => {
           margin-bottom: 1.5rem;
           padding-bottom: 0.5rem;
           border-bottom: 2px solid var(--btn-primary-background-color, #007bff);
+        }
+        .page-content {
+          animation: fadeInSlide 0.4s ease-out;
+          opacity: 1;
+          transform: translateX(0);
+        }
+        .page-content.transitioning {
+          opacity: 0;
+          transform: translateX(-10px);
+          transition: opacity 0.15s ease-in, transform 0.15s ease-in;
+        }
+        @keyframes fadeInSlide {
+          0% {
+            opacity: 0;
+            transform: translateX(20px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        .form-error {
+          color: #dc3545;
+          font-size: 0.875rem;
+          margin-top: 0.25rem;
+        }
+        .form-control.error {
+          border-color: #dc3545;
+          box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
         }
       ` }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sheet-header", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "sheet-title", children: "NOBI Request Form" }) }),
