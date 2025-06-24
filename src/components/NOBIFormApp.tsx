@@ -14,7 +14,7 @@ interface Currency {
   code: string
   symbol: string
   name: string
-  flag: string
+  locale: string
 }
 
 interface FormData {
@@ -52,26 +52,27 @@ const NOBIFormApp: React.FC = () => {
   const totalPages = 2
 
   const currencies: Currency[] = [
-    { code: 'USD', symbol: '$', name: 'US Dollar', flag: '🇺🇸' },
-    { code: 'EUR', symbol: '€', name: 'Euro', flag: '🇪🇺' },
-    { code: 'GBP', symbol: '£', name: 'British Pound', flag: '🇬🇧' },
-    { code: 'JPY', symbol: '¥', name: 'Japanese Yen', flag: '🇯🇵' },
-    { code: 'AUD', symbol: 'A$', name: 'Australian Dollar', flag: '🇦🇺' },
-    { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar', flag: '🇨🇦' },
-    { code: 'CHF', symbol: '₣', name: 'Swiss Franc', flag: '🇨🇭' },
-    { code: 'CNY', symbol: '¥', name: 'Chinese Yuan', flag: '🇨🇳' },
-    { code: 'SEK', symbol: 'kr', name: 'Swedish Krona', flag: '🇸🇪' },
-    { code: 'NZD', symbol: 'NZ$', name: 'New Zealand Dollar', flag: '🇳🇿' },
-    { code: 'MXN', symbol: '$', name: 'Mexican Peso', flag: '🇲🇽' },
-    { code: 'SGD', symbol: 'S$', name: 'Singapore Dollar', flag: '🇸🇬' },
-    { code: 'HKD', symbol: 'HK$', name: 'Hong Kong Dollar', flag: '🇭🇰' },
-    { code: 'NOK', symbol: 'kr', name: 'Norwegian Krone', flag: '🇳🇴' },
-    { code: 'KRW', symbol: '₩', name: 'South Korean Won', flag: '🇰🇷' },
-    { code: 'TRY', symbol: '₺', name: 'Turkish Lira', flag: '🇹🇷' },
-    { code: 'RUB', symbol: '₽', name: 'Russian Ruble', flag: '🇷🇺' },
-    { code: 'INR', symbol: '₹', name: 'Indian Rupee', flag: '🇮🇳' },
-    { code: 'BRL', symbol: 'R$', name: 'Brazilian Real', flag: '🇧🇷' },
-    { code: 'ZAR', symbol: 'R', name: 'South African Rand', flag: '🇿🇦' }
+    { code: 'USD', symbol: '$', name: 'US Dollar', locale: 'us' },
+    { code: 'EUR', symbol: '€', name: 'Euro', locale: 'eu' },
+    { code: 'GBP', symbol: '£', name: 'British Pound', locale: 'gb' },
+    { code: 'JPY', symbol: '¥', name: 'Japanese Yen', locale: 'jp' },
+    { code: 'AUD', symbol: 'A$', name: 'Australian Dollar', locale: 'au' },
+    { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar', locale: 'ca' },
+    { code: 'CHF', symbol: '₣', name: 'Swiss Franc', locale: 'ch' },
+    { code: 'CNY', symbol: '¥', name: 'Chinese Yuan', locale: 'cn' },
+    { code: 'SEK', symbol: 'kr', name: 'Swedish Krona', locale: 'se' },
+    { code: 'NZD', symbol: 'NZ$', name: 'New Zealand Dollar', locale: 'nz' },
+    { code: 'MXN', symbol: '$', name: 'Mexican Peso', locale: 'mx' },
+    { code: 'SGD', symbol: 'S$', name: 'Singapore Dollar', locale: 'sg' },
+    { code: 'HKD', symbol: 'HK$', name: 'Hong Kong Dollar', locale: 'hk' },
+    { code: 'NOK', symbol: 'kr', name: 'Norwegian Krone', locale: 'no' },
+    { code: 'KRW', symbol: '₩', name: 'South Korean Won', locale: 'kr' },
+    { code: 'TRY', symbol: '₺', name: 'Turkish Lira', locale: 'tr' },
+    { code: 'RUB', symbol: '₽', name: 'Russian Ruble', locale: 'ru' },
+    { code: 'INR', symbol: '₹', name: 'Indian Rupee', locale: 'in' },
+    { code: 'BRL', symbol: 'R$', name: 'Brazilian Real', locale: 'br' },
+    { code: 'ZAR', symbol: 'R', name: 'South African Rand', locale: 'za' },
+    { code: 'SAR', symbol: 'ر.س', name: 'Saudi Riyal', locale: 'ar-sa' }
   ]
   
   const [formData, setFormData] = useState<FormData>({
@@ -582,15 +583,15 @@ const NOBIFormApp: React.FC = () => {
               <div className="form-group">
                 <label className="control-label">Currency *</label>
                 <select 
-                  className="form-control" 
+                  className="form-control currency-select" 
                   value={formData.currency}
                   onChange={(e) => handleInputChange('currency', e.target.value)}
                   required
                 >
                   <option value="">Select Currency</option>
                   {currencies.map(currency => (
-                    <option key={currency.code} value={currency.code}>
-                      {currency.flag} {currency.code} - {currency.name}
+                    <option key={currency.code} value={currency.code} className="currency-option" data-locale={currency.locale}>
+                      {currency.code} - {currency.name} ({currency.symbol})
                     </option>
                   ))}
                 </select>
@@ -724,6 +725,82 @@ const NOBIFormApp: React.FC = () => {
         }
         .nobi-form-container.dark .progress-bar {
           background-color: #555;
+        }
+        .currency-select {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#globe');
+          background-repeat: no-repeat;
+          background-position: right 10px center;
+          background-size: 16px 16px;
+          padding-right: 35px;
+        }
+        .currency-option {
+          background-repeat: no-repeat;
+          background-position: left 10px center;
+          background-size: 16px 16px;
+          padding-left: 35px;
+        }
+        .currency-option[data-locale="us"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#us');
+        }
+        .currency-option[data-locale="eu"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#eu');
+        }
+        .currency-option[data-locale="gb"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#gb');
+        }
+        .currency-option[data-locale="jp"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#jp');
+        }
+        .currency-option[data-locale="ca"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#ca');
+        }
+        .currency-option[data-locale="au"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#au');
+        }
+        .currency-option[data-locale="ch"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#ch');
+        }
+        .currency-option[data-locale="cn"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#cn');
+        }
+        .currency-option[data-locale="ar-sa"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#ar-sa');
+        }
+        .currency-option[data-locale="se"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#se');
+        }
+        .currency-option[data-locale="nz"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#nz');
+        }
+        .currency-option[data-locale="mx"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#mx');
+        }
+        .currency-option[data-locale="sg"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#sg');
+        }
+        .currency-option[data-locale="hk"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#hk');
+        }
+        .currency-option[data-locale="no"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#no');
+        }
+        .currency-option[data-locale="kr"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#kr');
+        }
+        .currency-option[data-locale="tr"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#tr');
+        }
+        .currency-option[data-locale="ru"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#ru');
+        }
+        .currency-option[data-locale="in"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#in');
+        }
+        .currency-option[data-locale="br"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#br');
+        }
+        .currency-option[data-locale="za"] {
+          background-image: url('/o/classic-theme/images/clay/icons.svg#za');
         }
         .dark-mode-toggle {
           position: absolute;

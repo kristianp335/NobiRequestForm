@@ -86,7 +86,7 @@ The current setup suggests a local development environment with:
 - Added dark mode toggle with complete styling for all form elements and validation states
 - Enhanced progress bar animation with more vibrant shimmer effect and faster timing
 - Converted to multi-page form with progress tracking and currency dropdown
-- Added currency select with flags (🇺🇸 USD, 🇪🇺 EUR, etc.) that submits symbols only
+- Added currency select with Liferay SVG icons based on locale codes that submits symbols only
 - Moved requestor fields to top and split form into "About You" and "About the Vendor" sections
 - Implemented animated progress bar showing completion percentage
 - Added page navigation with Previous/Next buttons and visual page indicators
