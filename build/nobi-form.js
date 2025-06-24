@@ -12044,6 +12044,29 @@ const NOBIFormApp = () => {
   const [loading, setLoading] = reactExports.useState(true);
   const [submitting, setSubmitting] = reactExports.useState(false);
   const [message, setMessage] = reactExports.useState("");
+  const [currentPage, setCurrentPage] = reactExports.useState(1);
+  const currencies = [
+    { code: "USD", symbol: "$", name: "US Dollar", flag: "🇺🇸" },
+    { code: "EUR", symbol: "€", name: "Euro", flag: "🇪🇺" },
+    { code: "GBP", symbol: "£", name: "British Pound", flag: "🇬🇧" },
+    { code: "JPY", symbol: "¥", name: "Japanese Yen", flag: "🇯🇵" },
+    { code: "AUD", symbol: "A$", name: "Australian Dollar", flag: "🇦🇺" },
+    { code: "CAD", symbol: "C$", name: "Canadian Dollar", flag: "🇨🇦" },
+    { code: "CHF", symbol: "₣", name: "Swiss Franc", flag: "🇨🇭" },
+    { code: "CNY", symbol: "¥", name: "Chinese Yuan", flag: "🇨🇳" },
+    { code: "SEK", symbol: "kr", name: "Swedish Krona", flag: "🇸🇪" },
+    { code: "NZD", symbol: "NZ$", name: "New Zealand Dollar", flag: "🇳🇿" },
+    { code: "MXN", symbol: "$", name: "Mexican Peso", flag: "🇲🇽" },
+    { code: "SGD", symbol: "S$", name: "Singapore Dollar", flag: "🇸🇬" },
+    { code: "HKD", symbol: "HK$", name: "Hong Kong Dollar", flag: "🇭🇰" },
+    { code: "NOK", symbol: "kr", name: "Norwegian Krone", flag: "🇳🇴" },
+    { code: "KRW", symbol: "₩", name: "South Korean Won", flag: "🇰🇷" },
+    { code: "TRY", symbol: "₺", name: "Turkish Lira", flag: "🇹🇷" },
+    { code: "RUB", symbol: "₽", name: "Russian Ruble", flag: "🇷🇺" },
+    { code: "INR", symbol: "₹", name: "Indian Rupee", flag: "🇮🇳" },
+    { code: "BRL", symbol: "R$", name: "Brazilian Real", flag: "🇧🇷" },
+    { code: "ZAR", symbol: "R", name: "South African Rand", flag: "🇿🇦" }
+  ];
   const [formData, setFormData] = reactExports.useState({
     company: { key: "", name: "" },
     companyNumber: "",
@@ -12136,12 +12159,17 @@ const NOBIFormApp = () => {
     setMessage("");
     try {
       const authToken = getAuthToken();
+      const selectedCurrency = currencies.find((c) => c.code === formData.currency);
+      const submissionData = {
+        ...formData,
+        currency: selectedCurrency ? selectedCurrency.symbol : formData.currency
+      };
       const response = await fetch(`/o/c/nobprequests/?p_auth=${authToken}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(submissionData)
       });
       if (response.ok) {
         setMessage("NOBI request submitted successfully!");
@@ -12186,6 +12214,75 @@ const NOBIFormApp = () => {
         .nobi-form-loading {
           text-align: center;
           padding: 2rem;
+        }
+        .progress-container {
+          margin: 1rem 0 2rem 0;
+          background: #f8f9fa;
+          border-radius: 8px;
+          padding: 1rem;
+        }
+        .progress-bar {
+          width: 100%;
+          height: 8px;
+          background-color: #e9ecef;
+          border-radius: 4px;
+          overflow: hidden;
+          margin-bottom: 0.5rem;
+        }
+        .progress-fill {
+          height: 100%;
+          background: linear-gradient(90deg, #007bff, #0056b3);
+          border-radius: 4px;
+          transition: width 0.3s ease;
+          position: relative;
+        }
+        .progress-fill::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+          animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        .progress-text {
+          font-size: 0.875rem;
+          color: #6c757d;
+          text-align: center;
+        }
+        .page-navigation {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 2rem;
+        }
+        .page-indicator {
+          display: flex;
+          gap: 0.5rem;
+          align-items: center;
+        }
+        .page-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background-color: #dee2e6;
+          transition: background-color 0.3s ease;
+        }
+        .page-dot.active {
+          background-color: #007bff;
+        }
+        .section-title {
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #495057;
+          margin-bottom: 1.5rem;
+          padding-bottom: 0.5rem;
+          border-bottom: 2px solid #007bff;
         }
       ` }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sheet-header", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "sheet-title", children: "NOBI Request Form" }) }),
@@ -12410,13 +12507,22 @@ const NOBIFormApp = () => {
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "row", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Currency" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "select",
               {
-                type: "text",
                 className: "form-control",
                 value: formData.currency,
-                onChange: (e) => handleInputChange("currency", e.target.value)
+                onChange: (e) => handleInputChange("currency", e.target.value),
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", children: "Select Currency" }),
+                  currencies.map((currency) => /* @__PURE__ */ jsxRuntimeExports.jsxs("option", { value: currency.code, children: [
+                    currency.flag,
+                    " ",
+                    currency.code,
+                    " - ",
+                    currency.name
+                  ] }, currency.code))
+                ]
               }
             )
           ] }) }),
