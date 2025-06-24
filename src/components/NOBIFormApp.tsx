@@ -667,7 +667,7 @@ const NOBIFormApp: React.FC = () => {
           transition: background-color 0.3s ease;
         }
         .page-dot.active {
-          background-color: var(--color-brand-primary, #007bff);
+          background-color: var(--btn-primary-background-color, #007bff);
         }
         .section-title {
           font-size: 1.25rem;
