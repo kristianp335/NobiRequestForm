@@ -1,21 +1,10 @@
 {
-  "name": "workspace",
+  "name": "nobi-form-client-extension",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "NOBI Form Liferay Client Extension",
+  "main": "build/nobi-form.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "echo Build completed"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react": "^4.6.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.5"
-  }
+  "dependencies": {}
 }
