@@ -79,7 +79,8 @@ The current setup suggests a local development environment with:
 - June 24, 2025: Made all form fields required with validation
 - Auto-fills requestor names from user account API (/o/headless-admin-user/v1.0/my-user-account)
 - Auto-generates random 4-digit company number when company is selected
-- Updated page indicators to use var(--btn-primary-background-color) for brand consistency
+- Updated all primary colors (page indicators, section title borders, progress bar) to use var(--btn-primary-background-color)
+- Enhanced progress bar animation with more vibrant shimmer effect and faster timing
 - Converted to multi-page form with progress tracking and currency dropdown
 - Added currency select with flags (🇺🇸 USD, 🇪🇺 EUR, etc.) that submits symbols only
 - Moved requestor fields to top and split form into "About You" and "About the Vendor" sections

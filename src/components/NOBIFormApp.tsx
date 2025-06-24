@@ -624,7 +624,7 @@ const NOBIFormApp: React.FC = () => {
         }
         .progress-fill {
           height: 100%;
-          background: linear-gradient(90deg, #007bff, #0056b3);
+          background: linear-gradient(90deg, var(--btn-primary-background-color, #007bff), var(--btn-primary-background-color, #0056b3));
           border-radius: 4px;
           transition: width 0.3s ease;
           position: relative;
@@ -636,12 +636,21 @@ const NOBIFormApp: React.FC = () => {
           left: 0;
           right: 0;
           bottom: 0;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-          animation: shimmer 2s infinite;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+          animation: shimmer 1.5s infinite;
         }
         @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
+          0% { 
+            transform: translateX(-100%);
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% { 
+            transform: translateX(100%);
+            opacity: 0;
+          }
         }
         .progress-text {
           font-size: 0.875rem;
@@ -675,7 +684,7 @@ const NOBIFormApp: React.FC = () => {
           color: #495057;
           margin-bottom: 1.5rem;
           padding-bottom: 0.5rem;
-          border-bottom: 2px solid #007bff;
+          border-bottom: 2px solid var(--btn-primary-background-color, #007bff);
         }
       `}</style>
       
