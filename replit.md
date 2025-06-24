@@ -82,6 +82,7 @@ The current setup suggests a local development environment with:
 - Updated all primary colors (page indicators, section title borders, progress bar) to use var(--btn-primary-background-color)
 - Enhanced form with impactful animations: dramatic initial load, colorful page transitions, and glowing section titles
 - Added smooth page transition animations with fade-in slide effects
+- Added automatic total calculation: Invoice Net + Invoice VAT = Total Price (read-only field)
 - Implemented attractive amount field validation (2 decimal places, £100,000 limit)
 - Removed default zero values from amount fields, using placeholders instead
 - Added dark mode toggle with complete styling for all form elements and validation states

@@ -12241,7 +12241,14 @@ const NOBIFormApp = () => {
   };
   const handleAmountChange = (field, value) => {
     if (value === "" || /^\d*\.?\d{0,2}$/.test(value)) {
-      handleInputChange(field, value);
+      const updatedFormData = { ...formData, [field]: value };
+      if (field === "invoiceNetAmount" || field === "invoiceVatAmount") {
+        const netAmount = parseFloat(updatedFormData.invoiceNetAmount.toString()) || 0;
+        const vatAmount = parseFloat(updatedFormData.invoiceVatAmount.toString()) || 0;
+        const total = netAmount + vatAmount;
+        updatedFormData.totalPrice = total > 0 ? total.toFixed(2) : "";
+      }
+      setFormData(updatedFormData);
     }
   };
   const handleSubmit = async (e) => {
@@ -12591,16 +12598,16 @@ const NOBIFormApp = () => {
             validateAmount(formData.invoiceVatAmount.toString()) && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "form-error", children: validateAmount(formData.invoiceVatAmount.toString()) })
           ] }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Total Price *" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Total Price * (Auto-calculated)" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "input",
               {
                 type: "text",
-                className: `form-control ${validateAmount(formData.totalPrice.toString()) ? "error" : ""}`,
+                className: `form-control total-field ${validateAmount(formData.totalPrice.toString()) ? "error" : ""}`,
                 value: formData.totalPrice,
-                onChange: (e) => handleAmountChange("totalPrice", e.target.value),
                 placeholder: "0.00",
-                required: true
+                readOnly: true,
+                title: "This field is automatically calculated from Net Amount + VAT Amount"
               }
             ),
             validateAmount(formData.totalPrice.toString()) && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "form-error", children: validateAmount(formData.totalPrice.toString()) })
@@ -12754,6 +12761,23 @@ const NOBIFormApp = () => {
         }
         .currency-option[data-locale="za"] {
           background-image: url('/o/classic-theme/images/clay/icons.svg#za');
+        }
+        .total-field {
+          background-color: #f8f9fa !important;
+          cursor: not-allowed;
+          position: relative;
+        }
+        .nobi-form-container.dark .total-field {
+          background-color: #343a40 !important;
+          border-color: #6c757d;
+        }
+        .total-field::after {
+          content: '🧮';
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          pointer-events: none;
         }
         .dark-mode-toggle {
           position: absolute;

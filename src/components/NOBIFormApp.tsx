@@ -275,7 +275,18 @@ const NOBIFormApp: React.FC = () => {
   const handleAmountChange = (field: keyof FormData, value: string) => {
     // Allow empty string, numbers, and decimal point
     if (value === '' || /^\d*\.?\d{0,2}$/.test(value)) {
-      handleInputChange(field, value)
+      const updatedFormData = { ...formData, [field]: value }
+      
+      // Auto-calculate total when net amount or VAT amount changes
+      if (field === 'invoiceNetAmount' || field === 'invoiceVatAmount') {
+        const netAmount = parseFloat(updatedFormData.invoiceNetAmount.toString()) || 0
+        const vatAmount = parseFloat(updatedFormData.invoiceVatAmount.toString()) || 0
+        const total = netAmount + vatAmount
+        
+        updatedFormData.totalPrice = total > 0 ? total.toFixed(2) : ''
+      }
+      
+      setFormData(updatedFormData)
     }
   }
 
@@ -636,14 +647,14 @@ const NOBIFormApp: React.FC = () => {
             
             <div className="col-md-6">
               <div className="form-group">
-                <label className="control-label">Total Price *</label>
+                <label className="control-label">Total Price * (Auto-calculated)</label>
                 <input 
                   type="text" 
-                  className={`form-control ${validateAmount(formData.totalPrice.toString()) ? 'error' : ''}`}
+                  className={`form-control total-field ${validateAmount(formData.totalPrice.toString()) ? 'error' : ''}`}
                   value={formData.totalPrice}
-                  onChange={(e) => handleAmountChange('totalPrice', e.target.value)}
                   placeholder="0.00"
-                  required
+                  readOnly
+                  title="This field is automatically calculated from Net Amount + VAT Amount"
                 />
                 {validateAmount(formData.totalPrice.toString()) && (
                   <div className="form-error">{validateAmount(formData.totalPrice.toString())}</div>
@@ -801,6 +812,23 @@ const NOBIFormApp: React.FC = () => {
         }
         .currency-option[data-locale="za"] {
           background-image: url('/o/classic-theme/images/clay/icons.svg#za');
+        }
+        .total-field {
+          background-color: #f8f9fa !important;
+          cursor: not-allowed;
+          position: relative;
+        }
+        .nobi-form-container.dark .total-field {
+          background-color: #343a40 !important;
+          border-color: #6c757d;
+        }
+        .total-field::after {
+          content: '🧮';
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          pointer-events: none;
         }
         .dark-mode-toggle {
           position: absolute;
