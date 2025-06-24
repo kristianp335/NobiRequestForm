@@ -12045,6 +12045,7 @@ const NOBIFormApp = () => {
   const [submitting, setSubmitting] = reactExports.useState(false);
   const [message, setMessage] = reactExports.useState("");
   const [currentPage, setCurrentPage] = reactExports.useState(1);
+  const totalPages = 2;
   const currencies = [
     { code: "USD", symbol: "$", name: "US Dollar", flag: "🇺🇸" },
     { code: "EUR", symbol: "€", name: "Euro", flag: "🇪🇺" },
@@ -12133,24 +12134,39 @@ const NOBIFormApp = () => {
     };
     loadData();
   }, []);
-  const handleInputChange = (field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value
-    }));
+  const calculateProgress = () => {
+    const totalFields = 20;
+    let completedFields = 0;
+    if (formData.requestorFirstName) completedFields++;
+    if (formData.requestorSurname) completedFields++;
+    if (formData.company.key) completedFields++;
+    if (formData.companyNumber) completedFields++;
+    if (formData.contactNumber) completedFields++;
+    if (formData.costCentre) completedFields++;
+    if (formData.date) completedFields++;
+    if (formData.generalLedgerToBeCharged) completedFields++;
+    if (formData.lineManagerFullname) completedFields++;
+    if (formData.requestingDepartmentStore) completedFields++;
+    if (formData.sAPVendorName) completedFields++;
+    if (formData.sAPVendorNumber) completedFields++;
+    if (formData.vendorName) completedFields++;
+    if (formData.vendorAddressDetails) completedFields++;
+    if (formData.nOBICategory.key) completedFields++;
+    if (formData.multipleBankAccountNumberToBeUsed) completedFields++;
+    if (formData.currency) completedFields++;
+    if (formData.invoiceNetAmount > 0) completedFields++;
+    if (formData.invoiceVatAmount > 0) completedFields++;
+    if (formData.totalPrice > 0) completedFields++;
+    return Math.round(completedFields / totalFields * 100);
   };
-  const handleCompanyChange = (e) => {
-    const selectedKey = e.target.value;
-    const selectedCompany = companies.find((c) => c.key === selectedKey);
-    if (selectedCompany) {
-      handleInputChange("company", selectedCompany);
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
     }
   };
-  const handleCategoryChange = (e) => {
-    const selectedKey = e.target.value;
-    const selectedCategory = nobiCategories.find((c) => c.key === selectedKey);
-    if (selectedCategory) {
-      handleInputChange("nOBICategory", selectedCategory);
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
     }
   };
   const handleSubmit = async (e) => {
@@ -12287,296 +12303,58 @@ const NOBIFormApp = () => {
       ` }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sheet-header", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "sheet-title", children: "NOBI Request Form" }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sheet-section", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "progress-container", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "progress-bar", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: "progress-fill",
+            style: { width: `${calculateProgress()}%` }
+          }
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "progress-text", children: [
+          "Progress: ",
+          calculateProgress(),
+          "% Complete"
+        ] })
+      ] }),
       message && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `alert ${message.includes("Error") ? "alert-danger alert-dismissible" : "alert-success alert-dismissible"}`, children: message }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "row", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Company *" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "select",
-              {
-                className: "form-control",
-                value: formData.company.key,
-                onChange: handleCompanyChange,
-                required: true,
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", children: "Select Company" }),
-                  companies.map((company) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: company.key, children: company.name }, company.key))
-                ]
-              }
-            )
-          ] }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Company Number" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "text",
-                className: "form-control",
-                value: formData.companyNumber,
-                onChange: (e) => handleInputChange("companyNumber", e.target.value)
-              }
-            )
-          ] }) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "row", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Contact Number" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "text",
-                className: "form-control",
-                value: formData.contactNumber,
-                onChange: (e) => handleInputChange("contactNumber", e.target.value)
-              }
-            )
-          ] }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Cost Centre" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "text",
-                className: "form-control",
-                value: formData.costCentre,
-                onChange: (e) => handleInputChange("costCentre", e.target.value)
-              }
-            )
-          ] }) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "row", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Date *" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "date",
-                className: "form-control",
-                value: formData.date,
-                onChange: (e) => handleInputChange("date", e.target.value),
-                required: true
-              }
-            )
-          ] }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "General Ledger To Be Charged" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "text",
-                className: "form-control",
-                value: formData.generalLedgerToBeCharged,
-                onChange: (e) => handleInputChange("generalLedgerToBeCharged", e.target.value)
-              }
-            )
-          ] }) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Line Manager Full Name" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "input",
+        renderPageContent(),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "page-navigation", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: currentPage > 1 && /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
             {
-              type: "text",
-              className: "form-control",
-              value: formData.lineManagerFullname,
-              onChange: (e) => handleInputChange("lineManagerFullname", e.target.value)
+              type: "button",
+              className: "btn btn-secondary",
+              onClick: handlePrev,
+              children: "← Previous"
             }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Requesting Department/Store" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "input",
+          ) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "page-indicator", children: Array.from({ length: totalPages }, (_, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
             {
-              type: "text",
-              className: "form-control",
-              value: formData.requestingDepartmentStore,
-              onChange: (e) => handleInputChange("requestingDepartmentStore", e.target.value)
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "row", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Requestor First Name *" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "text",
-                className: "form-control",
-                value: formData.requestorFirstName,
-                onChange: (e) => handleInputChange("requestorFirstName", e.target.value),
-                required: true
-              }
-            )
-          ] }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Requestor Surname *" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "text",
-                className: "form-control",
-                value: formData.requestorSurname,
-                onChange: (e) => handleInputChange("requestorSurname", e.target.value),
-                required: true
-              }
-            )
-          ] }) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "row", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "SAP Vendor Name" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "text",
-                className: "form-control",
-                value: formData.sAPVendorName,
-                onChange: (e) => handleInputChange("sAPVendorName", e.target.value)
-              }
-            )
-          ] }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "SAP Vendor Number" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "text",
-                className: "form-control",
-                value: formData.sAPVendorNumber,
-                onChange: (e) => handleInputChange("sAPVendorNumber", e.target.value)
-              }
-            )
-          ] }) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Vendor Name" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "input",
+              className: `page-dot ${currentPage === i + 1 ? "active" : ""}`
+            },
+            i
+          )) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: currentPage < totalPages ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
             {
-              type: "text",
-              className: "form-control",
-              value: formData.vendorName,
-              onChange: (e) => handleInputChange("vendorName", e.target.value)
+              type: "button",
+              className: "btn btn-primary",
+              onClick: handleNext,
+              children: "Next →"
             }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Vendor Address Details" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "textarea",
+          ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
             {
-              className: "form-control",
-              rows: 3,
-              value: formData.vendorAddressDetails,
-              onChange: (e) => handleInputChange("vendorAddressDetails", e.target.value)
+              type: "submit",
+              className: "btn btn-success",
+              disabled: submitting,
+              children: submitting ? "Submitting..." : "Submit NOBI Request"
             }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "row", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "NOBI Category *" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "select",
-              {
-                className: "form-control",
-                value: formData.nOBICategory.key,
-                onChange: handleCategoryChange,
-                required: true,
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", children: "Select NOBI Category" }),
-                  nobiCategories.map((category) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: category.key, children: category.name }, category.key))
-                ]
-              }
-            )
-          ] }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Multiple Bank Account Number" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "text",
-                className: "form-control",
-                value: formData.multipleBankAccountNumberToBeUsed,
-                onChange: (e) => handleInputChange("multipleBankAccountNumberToBeUsed", e.target.value)
-              }
-            )
-          ] }) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "row", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Currency" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "select",
-              {
-                className: "form-control",
-                value: formData.currency,
-                onChange: (e) => handleInputChange("currency", e.target.value),
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", children: "Select Currency" }),
-                  currencies.map((currency) => /* @__PURE__ */ jsxRuntimeExports.jsxs("option", { value: currency.code, children: [
-                    currency.flag,
-                    " ",
-                    currency.code,
-                    " - ",
-                    currency.name
-                  ] }, currency.code))
-                ]
-              }
-            )
-          ] }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Invoice Net Amount" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "number",
-                step: "0.01",
-                className: "form-control",
-                value: formData.invoiceNetAmount,
-                onChange: (e) => handleInputChange("invoiceNetAmount", parseFloat(e.target.value) || 0)
-              }
-            )
-          ] }) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "row", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Invoice VAT Amount" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "number",
-                step: "0.01",
-                className: "form-control",
-                value: formData.invoiceVatAmount,
-                onChange: (e) => handleInputChange("invoiceVatAmount", parseFloat(e.target.value) || 0)
-              }
-            )
-          ] }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "col-md-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "form-group", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "control-label", children: "Total Price" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "number",
-                step: "0.01",
-                className: "form-control",
-                value: formData.totalPrice,
-                onChange: (e) => handleInputChange("totalPrice", parseFloat(e.target.value) || 0)
-              }
-            )
-          ] }) })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sheet-footer", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            type: "submit",
-            className: "btn btn-primary",
-            disabled: submitting,
-            children: submitting ? "Submitting..." : "Submit NOBI Request"
-          }
-        ) })
+          ) })
+        ] })
       ] })
     ] })
   ] });

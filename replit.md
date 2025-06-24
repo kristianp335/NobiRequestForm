@@ -76,7 +76,12 @@ The current setup suggests a local development environment with:
 
 ## Recent Changes
 
-- June 24, 2025: Moved financial fields and category selection to bottom of form
+- June 24, 2025: Converted to multi-page form with progress tracking and currency dropdown
+- Added currency select with flags (🇺🇸 USD, 🇪🇺 EUR, etc.) that submits symbols only
+- Moved requestor fields to top and split form into "About You" and "About the Vendor" sections
+- Implemented animated progress bar showing completion percentage
+- Added page navigation with Previous/Next buttons and visual page indicators
+- Moved financial fields and category selection to bottom of form
 - Reordered form fields to match exact sequence from example JSON structure
 - Converted to use standard Liferay CSS classes (sheet, form-group, control-label, etc.)
 - Reduced custom CSS from 140 lines to minimal 4 lines
