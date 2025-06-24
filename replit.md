@@ -76,10 +76,11 @@ The current setup suggests a local development environment with:
 
 ## Recent Changes
 
-- June 24, 2025: Fixed Shadow DOM conflict error when multiple client extensions on same page
-- Removed Shadow DOM usage and switched to regular DOM with CSS scoping
+- June 24, 2025: Converted to use standard Liferay CSS classes (sheet, form-group, control-label, etc.)
+- Reduced custom CSS from 140 lines to minimal 4 lines
+- Fixed Shadow DOM conflict error when multiple client extensions on same page
+- Removed Shadow DOM usage and switched to regular DOM
 - Added initialization checks to prevent React root conflicts
-- Updated CSS with .nobi-form-wrapper prefix for proper style isolation
 - Fixed client-extension.yaml YAML formatting issues
 - Resolved Windows build compatibility by removing Unix-specific commands
 - Successfully tested build process - generates 559KB JavaScript bundle
