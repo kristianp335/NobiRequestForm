@@ -48,6 +48,7 @@ const NOBIFormApp: React.FC = () => {
   const [message, setMessage] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(false)
   const totalPages = 2
 
   const currencies: Currency[] = [
@@ -647,8 +648,98 @@ const NOBIFormApp: React.FC = () => {
   }
 
   return (
-    <div className="sheet sheet-lg">
+    <div className={`sheet sheet-lg nobi-form-container ${isDarkMode ? 'dark' : ''}`}>
+      <button 
+        className="dark-mode-toggle"
+        onClick={toggleDarkMode}
+        title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+      >
+        {isDarkMode ? '☀️' : '🌙'}
+      </button>
       <style>{`
+        .nobi-form-container {
+          transition: background-color 0.3s ease, color 0.3s ease;
+          position: relative;
+        }
+        .nobi-form-container.dark {
+          background-color: #2d2d2d;
+          color: #e9ecef;
+        }
+        .nobi-form-container.dark .sheet {
+          background-color: #2d2d2d;
+          border-color: #404040;
+        }
+        .nobi-form-container.dark .form-control {
+          background-color: #404040;
+          border-color: #555;
+          color: #e9ecef;
+        }
+        .nobi-form-container.dark .form-control:focus {
+          background-color: #4a4a4a;
+          border-color: var(--btn-primary-background-color, #007bff);
+          box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        .nobi-form-container.dark .control-label {
+          color: #e9ecef;
+        }
+        .nobi-form-container.dark .section-title {
+          color: #e9ecef;
+        }
+        .nobi-form-container.dark .sheet-title {
+          color: #e9ecef;
+        }
+        .nobi-form-container.dark .btn-primary {
+          background-color: var(--btn-primary-background-color, #007bff);
+          border-color: var(--btn-primary-background-color, #007bff);
+        }
+        .nobi-form-container.dark .btn-secondary {
+          background-color: #6c757d;
+          border-color: #6c757d;
+          color: #fff;
+        }
+        .nobi-form-container.dark .page-dot {
+          background-color: #555;
+        }
+        .nobi-form-container.dark .page-dot.active {
+          background-color: var(--btn-primary-background-color, #007bff);
+        }
+        .nobi-form-container.dark .form-control.error {
+          border-color: #dc3545;
+          background-color: #4a2c2c;
+        }
+        .nobi-form-container.dark .progress-container {
+          background-color: #404040;
+        }
+        .nobi-form-container.dark .progress-bar {
+          background-color: #555;
+        }
+        .dark-mode-toggle {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          background: none;
+          border: 1px solid #dee2e6;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.2rem;
+          transition: all 0.3s ease;
+          z-index: 10;
+        }
+        .nobi-form-container.dark .dark-mode-toggle {
+          border-color: #555;
+          color: #e9ecef;
+        }
+        .dark-mode-toggle:hover {
+          background-color: #f8f9fa;
+        }
+        .nobi-form-container.dark .dark-mode-toggle:hover {
+          background-color: #404040;
+        }
         .nobi-form-loading {
           text-align: center;
           padding: 2rem;

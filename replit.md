@@ -83,6 +83,7 @@ The current setup suggests a local development environment with:
 - Added smooth page transition animations with fade-in slide effects
 - Implemented attractive amount field validation (2 decimal places, £100,000 limit)
 - Removed default zero values from amount fields, using placeholders instead
+- Added dark mode toggle with complete styling for all form elements and validation states
 - Enhanced progress bar animation with more vibrant shimmer effect and faster timing
 - Converted to multi-page form with progress tracking and currency dropdown
 - Added currency select with flags (🇺🇸 USD, 🇪🇺 EUR, etc.) that submits symbols only
