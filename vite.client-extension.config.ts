@@ -1,8 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { copyFileSync } from 'fs'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    {
+      name: 'copy-css',
+      writeBundle() {
+        copyFileSync('src/nobi-form.css', 'build/nobi-form.css')
+      }
+    }
+  ],
   build: {
     outDir: 'build',
     lib: {

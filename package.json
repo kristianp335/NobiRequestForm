@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "build/nobi-form.js",
   "scripts": {
-    "build": "vite build --config vite.client-extension.config.ts && cp src/nobi-form.css build/"
+    "build": "vite build --config vite.client-extension.config.ts"
   },
   "keywords": ["liferay", "client-extension"],
   "author": "",
