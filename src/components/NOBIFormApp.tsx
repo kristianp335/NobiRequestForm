@@ -271,6 +271,296 @@ const NOBIFormApp: React.FC = () => {
     }
   }
 
+  const renderPageContent = () => {
+    if (currentPage === 1) {
+      return (
+        <div>
+          <h3 className="section-title">Section 1: About You</h3>
+          
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">Requestor First Name *</label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  value={formData.requestorFirstName}
+                  onChange={(e) => handleInputChange('requestorFirstName', e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+            
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">Requestor Surname *</label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  value={formData.requestorSurname}
+                  onChange={(e) => handleInputChange('requestorSurname', e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">Company *</label>
+                <select 
+                  className="form-control" 
+                  value={formData.company.key} 
+                  onChange={handleCompanyChange}
+                  required
+                >
+                  <option value="">Select Company</option>
+                  {companies.map(company => (
+                    <option key={company.key} value={company.key}>
+                      {company.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">Company Number</label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  value={formData.companyNumber}
+                  onChange={(e) => handleInputChange('companyNumber', e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">Contact Number</label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  value={formData.contactNumber}
+                  onChange={(e) => handleInputChange('contactNumber', e.target.value)}
+                />
+              </div>
+            </div>
+            
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">Cost Centre</label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  value={formData.costCentre}
+                  onChange={(e) => handleInputChange('costCentre', e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">Date *</label>
+                <input 
+                  type="date" 
+                  className="form-control" 
+                  value={formData.date}
+                  onChange={(e) => handleInputChange('date', e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+            
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">General Ledger To Be Charged</label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  value={formData.generalLedgerToBeCharged}
+                  onChange={(e) => handleInputChange('generalLedgerToBeCharged', e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="control-label">Line Manager Full Name</label>
+            <input 
+              type="text" 
+              className="form-control" 
+              value={formData.lineManagerFullname}
+              onChange={(e) => handleInputChange('lineManagerFullname', e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="control-label">Requesting Department/Store</label>
+            <input 
+              type="text" 
+              className="form-control" 
+              value={formData.requestingDepartmentStore}
+              onChange={(e) => handleInputChange('requestingDepartmentStore', e.target.value)}
+            />
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <h3 className="section-title">Section 2: About the Vendor</h3>
+          
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">SAP Vendor Name</label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  value={formData.sAPVendorName}
+                  onChange={(e) => handleInputChange('sAPVendorName', e.target.value)}
+                />
+              </div>
+            </div>
+            
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">SAP Vendor Number</label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  value={formData.sAPVendorNumber}
+                  onChange={(e) => handleInputChange('sAPVendorNumber', e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="control-label">Vendor Name</label>
+            <input 
+              type="text" 
+              className="form-control" 
+              value={formData.vendorName}
+              onChange={(e) => handleInputChange('vendorName', e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="control-label">Vendor Address Details</label>
+            <textarea 
+              className="form-control" 
+              rows={3}
+              value={formData.vendorAddressDetails}
+              onChange={(e) => handleInputChange('vendorAddressDetails', e.target.value)}
+            />
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">NOBI Category *</label>
+                <select 
+                  className="form-control" 
+                  value={formData.nOBICategory.key} 
+                  onChange={handleCategoryChange}
+                  required
+                >
+                  <option value="">Select NOBI Category</option>
+                  {nobiCategories.map(category => (
+                    <option key={category.key} value={category.key}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">Multiple Bank Account Number</label>
+                <input 
+                  type="text" 
+                  className="form-control" 
+                  value={formData.multipleBankAccountNumberToBeUsed}
+                  onChange={(e) => handleInputChange('multipleBankAccountNumberToBeUsed', e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">Currency</label>
+                <select 
+                  className="form-control" 
+                  value={formData.currency}
+                  onChange={(e) => handleInputChange('currency', e.target.value)}
+                >
+                  <option value="">Select Currency</option>
+                  {currencies.map(currency => (
+                    <option key={currency.code} value={currency.code}>
+                      {currency.flag} {currency.code} - {currency.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">Invoice Net Amount</label>
+                <input 
+                  type="number" 
+                  step="0.01"
+                  className="form-control" 
+                  value={formData.invoiceNetAmount}
+                  onChange={(e) => handleInputChange('invoiceNetAmount', parseFloat(e.target.value) || 0)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">Invoice VAT Amount</label>
+                <input 
+                  type="number" 
+                  step="0.01"
+                  className="form-control" 
+                  value={formData.invoiceVatAmount}
+                  onChange={(e) => handleInputChange('invoiceVatAmount', parseFloat(e.target.value) || 0)}
+                />
+              </div>
+            </div>
+            
+            <div className="col-md-6">
+              <div className="form-group">
+                <label className="control-label">Total Price</label>
+                <input 
+                  type="number" 
+                  step="0.01"
+                  className="form-control" 
+                  value={formData.totalPrice}
+                  onChange={(e) => handleInputChange('totalPrice', parseFloat(e.target.value) || 0)}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  }
+
   if (loading) {
     return <div className="nobi-form-loading">Loading form data...</div>
   }
