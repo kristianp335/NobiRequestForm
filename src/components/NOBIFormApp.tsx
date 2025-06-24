@@ -241,7 +241,7 @@ const NOBIFormApp: React.FC = () => {
       setTimeout(() => {
         setCurrentPage(currentPage + 1)
         setIsTransitioning(false)
-      }, 150)
+      }, 400)
     }
   }
 
@@ -251,7 +251,7 @@ const NOBIFormApp: React.FC = () => {
       setTimeout(() => {
         setCurrentPage(currentPage - 1)
         setIsTransitioning(false)
-      }, 150)
+      }, 400)
     }
   }
 
@@ -661,7 +661,7 @@ const NOBIFormApp: React.FC = () => {
   }
 
   return (
-    <div className={`sheet sheet-lg nobi-form-container ${isDarkMode ? 'dark' : ''}`}>
+    <div className={`sheet sheet-lg nobi-form-container ${isDarkMode ? 'dark' : ''} ${loading ? '' : 'initial-load-animation'}`}>
       <button 
         className="dark-mode-toggle"
         onClick={toggleDarkMode}
@@ -849,10 +849,14 @@ const NOBIFormApp: React.FC = () => {
         }
         .progress-fill {
           height: 100%;
-          background: linear-gradient(90deg, var(--btn-primary-background-color, #007bff), var(--btn-primary-background-color, #0056b3));
+          background: linear-gradient(90deg, 
+            var(--btn-primary-background-color, #007bff), 
+            #00d4ff, 
+            var(--btn-primary-background-color, #0056b3));
           border-radius: 4px;
-          transition: width 0.3s ease;
+          transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
           position: relative;
+          box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
         }
         .progress-fill::after {
           content: '';
@@ -861,15 +865,23 @@ const NOBIFormApp: React.FC = () => {
           left: 0;
           right: 0;
           bottom: 0;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-          animation: shimmer 1.5s infinite;
+          background: linear-gradient(90deg, 
+            transparent, 
+            rgba(255,255,255,0.8), 
+            rgba(0, 212, 255, 0.4),
+            rgba(255,255,255,0.8), 
+            transparent);
+          animation: shimmer 1.8s infinite;
         }
         @keyframes shimmer {
           0% { 
             transform: translateX(-100%);
             opacity: 0;
           }
-          50% {
+          30% {
+            opacity: 0.8;
+          }
+          70% {
             opacity: 1;
           }
           100% { 
@@ -898,10 +910,38 @@ const NOBIFormApp: React.FC = () => {
           height: 12px;
           border-radius: 50%;
           background-color: #dee2e6;
-          transition: background-color 0.3s ease;
+          transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
         }
         .page-dot.active {
           background-color: var(--btn-primary-background-color, #007bff);
+          transform: scale(1.3);
+          box-shadow: 0 0 12px rgba(0, 123, 255, 0.6);
+        }
+        .page-dot.active::after {
+          content: '';
+          position: absolute;
+          top: -3px;
+          left: -3px;
+          right: -3px;
+          bottom: -3px;
+          border-radius: 50%;
+          background: linear-gradient(45deg, 
+            var(--btn-primary-background-color, #007bff), 
+            #00d4ff, 
+            var(--btn-primary-background-color, #007bff));
+          z-index: -1;
+          animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(0.8);
+          }
+          50% {
+            opacity: 0.6;
+            transform: scale(1.1);
+          }
         }
         .section-title {
           font-size: 1.25rem;
@@ -910,25 +950,93 @@ const NOBIFormApp: React.FC = () => {
           margin-bottom: 1.5rem;
           padding-bottom: 0.5rem;
           border-bottom: 2px solid var(--btn-primary-background-color, #007bff);
+          position: relative;
+          animation: titleGlow 0.8s ease-out;
+        }
+        .section-title::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, 
+            var(--btn-primary-background-color, #007bff), 
+            #00d4ff, 
+            var(--btn-primary-background-color, #007bff));
+          animation: borderShimmer 2s infinite;
+        }
+        @keyframes titleGlow {
+          0% {
+            opacity: 0;
+            transform: translateY(10px);
+            text-shadow: none;
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+            text-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+          }
+        }
+        @keyframes borderShimmer {
+          0%, 100% {
+            opacity: 0.7;
+          }
+          50% {
+            opacity: 1;
+            box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+          }
         }
         .page-content {
-          animation: fadeInSlide 0.4s ease-out;
+          animation: fadeInSlide 0.8s cubic-bezier(0.4, 0, 0.2, 1);
           opacity: 1;
           transform: translateX(0);
         }
         .page-content.transitioning {
           opacity: 0;
-          transform: translateX(-10px);
-          transition: opacity 0.15s ease-in, transform 0.15s ease-in;
+          transform: translateX(-30px) scale(0.95);
+          transition: opacity 0.4s ease-in, transform 0.4s ease-in;
         }
         @keyframes fadeInSlide {
           0% {
             opacity: 0;
-            transform: translateX(20px);
+            transform: translateX(50px) scale(0.95);
+            filter: blur(2px);
+          }
+          50% {
+            opacity: 0.6;
+            transform: translateX(20px) scale(0.98);
+            filter: blur(1px);
           }
           100% {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateX(0) scale(1);
+            filter: blur(0);
+          }
+        }
+        .initial-load-animation {
+          animation: initialLoad 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes initialLoad {
+          0% {
+            opacity: 0;
+            transform: translateY(40px) scale(0.9);
+            filter: blur(3px);
+          }
+          30% {
+            opacity: 0.3;
+            transform: translateY(20px) scale(0.95);
+            filter: blur(2px);
+          }
+          60% {
+            opacity: 0.7;
+            transform: translateY(10px) scale(0.98);
+            filter: blur(1px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
           }
         }
         .form-error {
