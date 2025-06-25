@@ -830,6 +830,11 @@ const NOBIFormApp: React.FC = () => {
           transform: translateY(-50%);
           pointer-events: none;
         }
+        .control-label::after {
+          content: ' *';
+          color: #dc3545;
+          font-weight: bold;
+        }
         .dark-mode-toggle {
           position: absolute;
           top: 1rem;
@@ -1149,6 +1154,12 @@ const NOBIFormApp: React.FC = () => {
             </div>
           </div>
         </form>
+        
+        {showSuccess && (
+          <div className="alert alert-success" role="alert">
+            <strong>Success!</strong> Your NOBI request has been submitted successfully.
+          </div>
+        )}
       </div>
     </div>
   )

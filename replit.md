@@ -88,6 +88,12 @@ The current setup suggests a local development environment with:
 
 ## Recent Changes
 
+### June 25, 2025: UI/UX Refinements
+- **Success Message**: Moved success banner to bottom of form for better user flow
+- **Required Fields**: Made asterisks red for clearer visual indication of mandatory fields
+- **Enhanced Animations**: Extended transitions to 0.8s with colorful gradient effects and blur
+- **Visual Polish**: Added calculator emoji to auto-calculated total field
+
 ### June 24, 2025: Major Feature Updates
 - **Automatic Calculation**: Added Invoice Net + Invoice VAT = Total Price with real-time updates
 - **Enhanced Animations**: Dramatic 1.2s initial load with blur effects and colorful page transitions

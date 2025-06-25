@@ -12779,6 +12779,11 @@ const NOBIFormApp = () => {
           transform: translateY(-50%);
           pointer-events: none;
         }
+        .control-label::after {
+          content: ' *';
+          color: #dc3545;
+          font-weight: bold;
+        }
         .dark-mode-toggle {
           position: absolute;
           top: 1rem;
@@ -13080,6 +13085,10 @@ const NOBIFormApp = () => {
             }
           ) })
         ] })
+      ] }),
+      showSuccess && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "alert alert-success", role: "alert", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Success!" }),
+        " Your NOBI request has been submitted successfully."
       ] })
     ] })
   ] });
